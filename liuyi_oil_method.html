@@ -108,14 +108,12 @@ body.lang-both .langtag{display:block}
 .article li::before{content:"";position:absolute;left:2px;top:15px;width:7px;height:7px;border:1px solid var(--oxide);transform:rotate(45deg)}
 .kw{color:var(--gild);font-weight:500}
 .term{border-bottom:1px dotted var(--chalk-faint);cursor:help}
-/* supplement / editorial callouts */
 .supp{background:linear-gradient(180deg,var(--ground-2),var(--ground-3));border:1px solid var(--line);
   border-left:3px solid var(--gild);border-radius:3px;padding:18px 22px;margin:26px 0}
 .supp .lbl{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gild);margin-bottom:8px}
 .supp p{margin:8px 0}
 .quote{border:0;border-left:3px solid var(--nether);padding:6px 0 6px 22px;margin:26px 0;font-style:italic;color:var(--nether-2);font-size:19px;font-family:var(--serif-b)}
 .quote cite{display:block;font-style:normal;font-size:13px;color:var(--chalk-faint);font-family:var(--mono);letter-spacing:.1em;margin-top:10px}
-/* data table */
 .tbl-wrap{overflow-x:auto;margin:24px 0;border:1px solid var(--line);border-radius:3px}
 table.data{width:100%;border-collapse:collapse;font-size:14px;min-width:520px}
 table.data th{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--chalk-dim);
@@ -130,7 +128,6 @@ table.data tr:hover td{background:var(--ground-2)}
 .pill.fast{background:rgba(120,170,120,.15);color:#94c48f}
 .pill.slow{background:rgba(192,107,62,.14);color:var(--oxide-bright)}
 .pill.medd{background:rgba(201,162,75,.13);color:var(--gild)}
-/* interactive widget shell */
 .widget{background:radial-gradient(120% 120% at 50% 0%,var(--ground-3),var(--ground-2));
   border:1px solid var(--line);border-radius:5px;padding:26px;margin:32px 0;box-shadow:0 24px 60px -30px #000}
 .widget .whead{display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-bottom:20px;flex-wrap:wrap}
@@ -157,7 +154,6 @@ input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;bac
 .verdict{font-family:var(--mono);font-size:13px;padding:12px 16px;border-radius:3px;margin-top:16px;letter-spacing:.03em;line-height:1.5}
 .verdict.good{background:rgba(120,170,120,.12);color:#a7d3a1;border:1px solid rgba(120,170,120,.3)}
 .verdict.bad{background:rgba(192,107,62,.12);color:var(--oxide-bright);border:1px solid var(--oxide-deep)}
-/* fat-over-lean stack */
 .stack{display:flex;flex-direction:column-reverse;gap:2px;margin-top:6px}
 .layer{position:relative;border-radius:2px;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;cursor:default;overflow:hidden}
 .layer .lname{font-family:var(--mono);font-size:11px;letter-spacing:.05em;color:var(--chalk);z-index:2}
@@ -173,6 +169,13 @@ input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;bac
 .pager .next{text-align:right}
 .pager a.empty{visibility:hidden}
 .scrim{display:none}
+/* focus-visible: keyboard-only indicator using existing color palette */
+:focus-visible{outline:2px solid var(--oxide-bright);outline-offset:2px;border-radius:2px}
+.navitem:focus-visible{outline-offset:-2px;background:var(--ground-3)}
+.wbtn:focus-visible,.langset button:focus-visible{outline-offset:0}
+.hamburger:focus-visible{outline-offset:0}
+/* reduced motion */
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto}}
 @media(max-width:920px){
   :root{--sb-w:280px}
   .sidebar{position:fixed;left:0;top:0;z-index:60;transform:translateX(-100%);transition:transform .3s;box-shadow:24px 0 60px -20px #000}
@@ -183,37 +186,37 @@ input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;bac
   main{max-width:100%}
   .article{padding:20px 0 90px}
 }
-@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto}}
 </style>
 </head>
 <body class="lang-zh">
-<div class="scrim" onclick="toggleNav(false)"></div>
+<div class="scrim" onclick="toggleNav(false)" role="presentation" aria-hidden="true"></div>
 <div class="wrap">
-  <aside class="sidebar" id="sidebar">
+  <aside class="sidebar" id="sidebar" role="navigation" aria-label="目录 Navigation">
     <div class="brand">
       <div class="zh"><b>六胖子</b>油画技法</div>
       <div class="en">The Six-Fatty Oil Method</div>
       <div class="by">刘溢 (六胖子) 著 · 司徒勇 绘<br>Liu Yi &amp; Situ Yong · 人民美术出版社 2012</div>
     </div>
     <div class="controls">
-      <div class="langset" id="langset">
-        <button data-lang="zh" class="on">中文</button>
-        <button data-lang="both">双语</button>
-        <button data-lang="en">EN</button>
+      <div class="langset" id="langset" role="group" aria-label="语言切换 Language switcher">
+        <button data-lang="zh" class="on" aria-pressed="true">中文</button>
+        <button data-lang="both" aria-pressed="false">双语</button>
+        <button data-lang="en" aria-pressed="false">EN</button>
       </div>
-      <div class="search">
-        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
-        <input id="search" type="search" placeholder="搜索技法 / search…" autocomplete="off">
+      <div class="search" role="search">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+        <input id="search" type="search" placeholder="搜索技法 / search…" autocomplete="off" aria-label="搜索技法 / Search techniques">
       </div>
     </div>
-    <nav id="nav"></nav>
+    <nav id="nav" aria-label="章节列表 Chapter list"></nav>
+    <div id="sr-search-status" aria-live="polite" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0"></div>
   </aside>
   <main>
     <div class="topbar">
-      <button class="hamburger" onclick="toggleNav()"><span></span><span></span><span></span></button>
+      <button class="hamburger" onclick="toggleNav()" aria-expanded="false" aria-label="切换导航 Toggle navigation"><span></span><span></span><span></span></button>
       <div style="font-family:var(--serif-d);font-weight:600;font-size:18px">六胖子油画技法</div>
     </div>
-    <article class="article" id="article"></article>
+    <article class="article" id="article" role="main" aria-live="polite"></article>
     <div class="footer">
       <div class="mono">SYNTHESIZED KNOWLEDGE BASE · 综合知识库</div>
       <p style="margin-top:10px">本知识库依据《六胖子油画技法》（刘溢 著，司徒勇 绘，人民美术出版社 2012，ISBN 978-7-102-06093-4）的技法与理念重新编写、翻译并补充，未复制原书文字或图版。补充内容以金色标注。<br>
@@ -657,19 +660,25 @@ function lum(rgb){return .2126*rgb[0]+.7152*rgb[1]+.0722*rgb[2];}
 const article=document.getElementById('article');
 const nav=document.getElementById('nav');
 let current=0;
+let navItems=[];
 function buildNav(){
   let html='',lastPart='';
   SECTIONS.forEach((s,i)=>{
     if(s.part!==lastPart){html+=`<div class="part-h">${s.part}</div>`;lastPart=s.part;}
-    html+=`<div class="navitem" data-i="${i}" onclick="go(${i})">
+    html+=`<div class="navitem" data-i="${i}" onclick="go(${i})" role="button" tabindex="0" aria-current="false">
       <span class="n">${s.num}</span>
       <span class="t"><span class="zh">${s.zt}</span><span class="en">${s.et}</span></span></div>`;
   });
   nav.innerHTML=html;
+  navItems=document.querySelectorAll('.navitem');
+  navItems.forEach(el=>{
+    el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go(+el.dataset.i);}});
+  });
 }
 function go(i,push=true){
+  if(i<0||i>=SECTIONS.length)return;
   current=i;const s=SECTIONS[i];
-  document.querySelectorAll('.navitem').forEach(n=>n.classList.toggle('on',+n.dataset.i===i));
+  navItems.forEach(n=>{const on=+n.dataset.i===i;n.classList.toggle('on',on);n.setAttribute('aria-current',on?'page':'false');});
   const prev=i>0?SECTIONS[i-1]:null, next=i<SECTIONS.length-1?SECTIONS[i+1]:null;
   article.innerHTML=`
     <div class="eyebrow">${s.part} · ${s.num}</div>
@@ -679,44 +688,70 @@ function go(i,push=true){
     ${s.widget?`<div id="widget-mount"></div>`:''}
     <div class="body-en"><div class="langtag">English</div>${s.en}</div>
     <div class="pager">
-      <a class="${prev?'':'empty'}" ${prev?`onclick="go(${i-1})"`:''}><div class="dir">← 上一节 Prev</div><div class="nm">${prev?prev.zt:''}</div></a>
-      <a class="next ${next?'':'empty'}" ${next?`onclick="go(${i+1})"`:''}><div class="dir">下一节 Next →</div><div class="nm">${next?next.zt:''}</div></a>
+      <a class="${prev?'':'empty'}" ${prev?`onclick="go(${i-1})" role="button" tabindex="0"`:''} ${prev?`onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();go(${i-1})}"`:''}><div class="dir">← 上一节 Prev</div><div class="nm">${prev?prev.zt:''}</div></a>
+      <a class="next ${next?'':'empty'}" ${next?`onclick="go(${i+1})" role="button" tabindex="0"`:''} ${next?`onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();go(${i+1})}"`:''}><div class="dir">下一节 Next →</div><div class="nm">${next?next.zt:''}</div></a>
     </div>`;
   applyLede();
   if(s.widget){mountWidget(s.widget,document.getElementById('widget-mount'));}
   if(push)history.replaceState(null,'','#'+s.id);
   window.scrollTo({top:0,behavior:'instant'in window?'instant':'auto'});
+  // focus management: move focus to article heading for keyboard users
+  const h1=article.querySelector('h1');
+  if(h1){h1.setAttribute('tabindex','-1');h1.focus({preventScroll:true});}
   if(window.innerWidth<=920)toggleNav(false);
+  // update search status if search is active
+  updateSearchStatus();
 }
-function applyLede(){
-  // title zh/en handled by CSS body lang classes via .en-sub always shown; hide zh title in EN mode
-}
+function applyLede(){}
 /* ============================================================ LANG */
 function setLang(l){
   document.body.className=document.body.className.replace(/lang-\w+/g,'').trim();
   document.body.classList.add('lang-'+l);
-  document.querySelectorAll('#langset button').forEach(b=>b.classList.toggle('on',b.dataset.lang===l));
-  // title behavior
+  const btns=document.querySelectorAll('#langset button');
+  btns.forEach(b=>{const on=b.dataset.lang===l;b.classList.toggle('on',on);b.setAttribute('aria-pressed',on?'true':'false');});
   document.querySelectorAll('.zh-t').forEach(e=>e.style.display=(l==='en')?'none':'block');
   document.querySelectorAll('.l-zh').forEach(e=>e.style.display=(l==='en')?'none':'inline');
   document.querySelectorAll('.l-en').forEach(e=>e.style.display=(l==='zh')?'none':(l==='both'?'block':'inline'));
   if(l==='both'){document.querySelectorAll('.l-en').forEach(e=>{e.style.marginTop='8px';e.style.opacity=.85;e.style.fontSize='16px';});}
+  syncCells();
   localStorage&&localStorage.setItem&&safeStore('lymethod_lang',l);
 }
 function safeStore(k,v){try{localStorage.setItem(k,v);}catch(e){}}
 function safeGet(k){try{return localStorage.getItem(k);}catch(e){return null;}}
 document.getElementById('langset').addEventListener('click',e=>{if(e.target.dataset.lang)setLang(e.target.dataset.lang);});
-/* ============================================================ SEARCH */
+/* ============================================================ SEARCH with debounce & status */
+let searchTimer=null;
 document.getElementById('search').addEventListener('input',e=>{
-  const q=e.target.value.trim().toLowerCase();
-  document.querySelectorAll('.navitem').forEach(n=>{
-    const s=SECTIONS[+n.dataset.i];
-    const hay=(s.zt+s.et+s.lede_zh+s.lede_en+s.zh+s.en).toLowerCase();
-    n.classList.toggle('hide',q&&!hay.includes(q));
-  });
+  clearTimeout(searchTimer);
+  searchTimer=setTimeout(()=>{
+    const q=e.target.value.trim().toLowerCase();
+    let matchCount=0;
+    navItems.forEach(n=>{
+      const s=SECTIONS[+n.dataset.i];
+      const hay=(s.zt+s.et+s.lede_zh+s.lede_en+s.zh+s.en).toLowerCase();
+      const hide=q&&!hay.includes(q);
+      n.classList.toggle('hide',hide);
+      if(!hide)matchCount++;
+    });
+    const status=document.getElementById('sr-search-status');
+    if(q){status.textContent=`搜索“${q}”找到 ${matchCount} 个结果 · Found ${matchCount} results`;}else{status.textContent='';}
+  },150);
 });
+function updateSearchStatus(){
+  const q=document.getElementById('search').value.trim().toLowerCase();
+  if(!q)return;
+  let matchCount=0;
+  navItems.forEach(n=>{if(!n.classList.contains('hide'))matchCount++;});
+  const status=document.getElementById('sr-search-status');
+  status.textContent=`搜索“${q}”找到 ${matchCount} 个结果 · Found ${matchCount} results`;
+}
 /* ============================================================ MOBILE NAV */
-function toggleNav(force){document.body.classList.toggle('nav-open',force===undefined?!document.body.classList.contains('nav-open'):force);}
+function toggleNav(force){
+  const open=force===undefined?!document.body.classList.contains('nav-open'):force;
+  document.body.classList.toggle('nav-open',open);
+  const btn=document.querySelector('.hamburger');
+  if(btn)btn.setAttribute('aria-expanded',open?'true':'false');
+}
 /* ============================================================ WIDGETS */
 function mountWidget(kind,el){({fatlean:wFatLean,flesh:wFlesh,nether:wNether,glaze:wGlaze,pigments:wPigments}[kind])(el);}
 
@@ -724,10 +759,8 @@ function mountWidget(kind,el){({fatlean:wFatLean,flesh:wFlesh,nether:wNether,gla
 function drawSphere(cv,light,mid,shadow,{glaze=null,woodcut=false}={}){
   const ctx=cv.getContext('2d'),W=cv.width,H=cv.height,cx=W*0.5,cy=H*0.52,R=Math.min(W,H)*0.4;
   ctx.clearRect(0,0,W,H);
-  // backdrop
   ctx.fillStyle='#181310';ctx.fillRect(0,0,W,H);
   if(woodcut){
-    // three flat bands like a color woodcut
     ctx.save();ctx.beginPath();ctx.arc(cx,cy,R,0,7);ctx.clip();
     ctx.fillStyle=rgb2hex(shadow);ctx.fillRect(0,0,W,H);
     ctx.fillStyle=rgb2hex(mid);ctx.beginPath();ctx.arc(cx+R*0.15,cy+R*0.05,R*0.92,0,7);ctx.fill();
@@ -739,19 +772,17 @@ function drawSphere(cv,light,mid,shadow,{glaze=null,woodcut=false}={}){
     g.addColorStop(0.42,rgb2hex(mid));
     g.addColorStop(1,rgb2hex(shadow));
     ctx.fillStyle=g;ctx.beginPath();ctx.arc(cx,cy,R,0,7);ctx.fill();
-    // reflected light at lower right
     const rl=ctx.createRadialGradient(cx+R*0.55,cy+R*0.6,0,cx+R*0.55,cy+R*0.6,R*0.7);
     rl.addColorStop(0,'rgba('+mid.map(x=>Math.round(x)).join(',')+',0.35)');
     rl.addColorStop(1,'rgba(0,0,0,0)');
     ctx.save();ctx.beginPath();ctx.arc(cx,cy,R,0,7);ctx.clip();ctx.fillStyle=rl;ctx.fillRect(0,0,W,H);ctx.restore();
   }
-  if(glaze){ // multiply glaze
+  if(glaze){
     ctx.save();ctx.beginPath();ctx.arc(cx,cy,R,0,7);ctx.clip();
     ctx.globalCompositeOperation='multiply';
     ctx.globalAlpha=glaze.a;ctx.fillStyle=rgb2hex(glaze.rgb);ctx.fillRect(0,0,W,H);
     ctx.restore();
   }
-  // cast shadow ellipse
   ctx.globalAlpha=1;ctx.globalCompositeOperation='source-over';
   const cs=ctx.createRadialGradient(cx,cy+R*1.05,0,cx,cy+R*1.05,R*0.9);
   cs.addColorStop(0,'rgba(0,0,0,0.5)');cs.addColorStop(1,'rgba(0,0,0,0)');
@@ -781,7 +812,7 @@ function wFatLean(el){
       const c=rgb2hex(fatColor(L.fat));
       return `<div class="layer" style="background:linear-gradient(90deg,${c},${c}cc)">
         <span class="lname">${L.zh}</span>
-        <span class="fatctrl"><input type="range" min="0" max="100" value="${L.fat}" data-i="${i}" style="width:90px"><span class="lval" style="min-width:34px;text-align:right">${L.fat}</span></span>
+        <span class="fatctrl"><input type="range" min="0" max="100" value="${L.fat}" data-i="${i}" style="width:90px" aria-label="${L.zh} 肥度 / fatness"><span class="lval" style="min-width:34px;text-align:right">${L.fat}</span></span>
       </div>`;
     }).join('');
     stack.querySelectorAll('input').forEach(inp=>inp.addEventListener('input',e=>{layers[+e.target.dataset.i].fat=+e.target.value;render();judge();}));
@@ -790,10 +821,9 @@ function wFatLean(el){
   function judge(){
     let ok=true,badAt=-1;
     for(let i=1;i<layers.length;i++){if(layers[i].fat<layers[i-1].fat){ok=false;badAt=i;break;}}
-    const cv=el.querySelector('#fl-cv');cv.width=cv.offsetWidth;
+    const cv=el.querySelector('#fl-cv');cv.width=cv.offsetWidth||360;
     const ctx=cv.getContext('2d'),W=cv.width,H=cv.height;
     ctx.clearRect(0,0,W,H);
-    // film cross-section
     const n=layers.length,h=H/n;
     for(let i=0;i<n;i++){ctx.fillStyle=rgb2hex(fatColor(layers[i].fat));ctx.fillRect(0,H-(i+1)*h,W,h);}
     const v=el.querySelector('#fl-verdict');
@@ -803,7 +833,6 @@ function wFatLean(el){
     }else{
       v.className='verdict bad';
       v.innerHTML=`✕ 违反肥压瘦：第 ${badAt+1} 层（${layers[badAt].zh}）比它下面更瘦 → 表面脆层开裂（鳄鱼纹）。<br>Broken: layer ${badAt+1} is leaner than the one below → the brittle surface cracks (alligator craquelure).`;
-      // draw cracks
       ctx.strokeStyle='rgba(15,10,6,0.8)';ctx.lineWidth=1.4;
       for(let k=0;k<26;k++){
         ctx.beginPath();let x=Math.random()*W,y=Math.random()*H*0.5;ctx.moveTo(x,y);
@@ -813,9 +842,9 @@ function wFatLean(el){
     }
   }
   render();
-  window.addEventListener('resize',judge);
+  window.addEventListener('resize',()=>{const cv=el.querySelector('#fl-cv');if(cv){cv.width=cv.offsetWidth||360;judge();}});
 }
-/* ---- 2. THREE-PILE FLESH LAB (signature) ---- */
+/* ---- 2. THREE-PILE FLESH LAB ---- */
 const SKINS=[
   {zh:'白皙 Fair',rgb:[224,178,150]},
   {zh:'暖黄 Olive',rgb:[206,158,116]},
@@ -824,12 +853,9 @@ const SKINS=[
 ];
 function threePiles(skin,envHue,warm){
   const base=skin.slice();
-  // LIGHT = skin + warm white toward light source
-  const warmWhite=hsl2rgb((warm<0.5?40:32),0.18,0.92); // creamy highlight
+  const warmWhite=hsl2rgb((warm<0.5?40:32),0.18,0.92);
   const light=mix(base,warmWhite,0.42);
-  // SHADOW = skin darkened + red-brown
   const shadow=mix(mix(base,[46,20,16],0.5),[70,28,26],0.25);
-  // NETHER MID = low-sat gray whispering the environment's complement
   const bh=rgb2hsl(base[0],base[1],base[2]);
   const comp=(envHue+180)%360;
   const mid=hsl2rgb(comp,0.13,Math.max(0.34,bh[2]*0.72));
@@ -844,8 +870,8 @@ function wFlesh(el){
       <div>
         <canvas id="fl2-cv" class="wcanvas" width="360" height="300"></canvas>
         <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
-          <button class="wbtn" id="fl2-blend">显示衔接前(木刻) Woodcut</button>
-          <button class="wbtn" id="fl2-exp">环境未画(死人灰) Corpse</button>
+          <button class="wbtn" id="fl2-blend" aria-pressed="false">显示衔接前(木刻) Woodcut</button>
+          <button class="wbtn" id="fl2-exp" aria-pressed="false">环境未画(死人灰) Corpse</button>
         </div>
       </div>
       <div>
@@ -853,8 +879,8 @@ function wFlesh(el){
           <label>底肤色 Base skin</label>
           <div style="display:flex;gap:6px;flex-wrap:wrap" id="fl2-skins"></div>
         </div>
-        <div class="ctrl"><label>环境色相 Environment hue <b id="fl2-envv">${envHue}°</b></label><input type="range" id="fl2-env" min="0" max="360" value="${envHue}"></div>
-        <div class="ctrl" style="margin-top:12px"><label>光源冷暖 Light warmth <b id="fl2-warmv">暖</b></label><input type="range" id="fl2-warm" min="0" max="100" value="35"></div>
+        <div class="ctrl"><label>环境色相 Environment hue <b id="fl2-envv">${envHue}°</b></label><input type="range" id="fl2-env" min="0" max="360" value="${envHue}" aria-label="环境色相 Environment hue"></div>
+        <div class="ctrl" style="margin-top:12px"><label>光源冷暖 Light warmth <b id="fl2-warmv">暖</b></label><input type="range" id="fl2-warm" min="0" max="100" value="35" aria-label="光源冷暖 Light warmth"></div>
         <div style="margin-top:18px" class="swatches" id="fl2-sw"></div>
         <div class="legend" style="margin-top:10px"><span id="fl2-neth"></span></div>
       </div>
@@ -862,26 +888,23 @@ function wFlesh(el){
   </div>`;
   const cv=el.querySelector('#fl2-cv');
   const skinsBox=el.querySelector('#fl2-skins');
-  skinsBox.innerHTML=SKINS.map((s,i)=>`<button class="wbtn ${i==skinI?'on':''}" data-i="${i}" style="padding:6px 10px"><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:${rgb2hex(s.rgb)};vertical-align:middle;margin-right:5px"></span>${s.zh}</button>`).join('');
+  skinsBox.innerHTML=SKINS.map((s,i)=>`<button class="wbtn ${i==skinI?'on':''}" data-i="${i}" aria-pressed="${i==skinI?'true':'false'}" style="padding:6px 10px"><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:${rgb2hex(s.rgb)};vertical-align:middle;margin-right:5px"></span>${s.zh}</button>`).join('');
   function render(){
     const p=threePiles(SKINS[skinI].rgb,envHue,warm);
     let L=p.light,M=p.mid,S=p.shadow;
-    if(exposed){ // pull everything toward the cold nether — skin before environment
-      L=mix(L,M,0.55);S=mix(S,M,0.45);M=mix(M,[150,150,160],0.2);
-    }
+    if(exposed){L=mix(L,M,0.55);S=mix(S,M,0.45);M=mix(M,[150,150,160],0.2);}
     drawSphere(cv,L,M,S,{woodcut});
-    // swatches
     el.querySelector('#fl2-sw').innerHTML=[[p.light,'亮 LIGHT'],[p.mid,'中·冥灰 NETHER'],[p.shadow,'暗 SHADOW']].map(([c,t])=>{
       const dark=lum(c)<120;return `<div class="swatch" style="background:${rgb2hex(c)};color:${dark?'rgba(255,255,255,.75)':'rgba(0,0,0,.6)'}">${t}<br>${rgb2hex(c)}</div>`;
     }).join('');
     const comp=(envHue+180)%360;
     el.querySelector('#fl2-neth').innerHTML=`<i style="background:${rgb2hex(p.mid)}"></i>冥灰≈环境补色 ${Math.round(comp)}°，低纯度 · nether ≈ env complement, desaturated`;
   }
-  skinsBox.querySelectorAll('button').forEach(b=>b.addEventListener('click',e=>{skinI=+b.dataset.i;skinsBox.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));render();}));
+  skinsBox.querySelectorAll('button').forEach(b=>b.addEventListener('click',e=>{skinI=+b.dataset.i;skinsBox.querySelectorAll('button').forEach(x=>{const on=x===b;x.classList.toggle('on',on);x.setAttribute('aria-pressed',on?'true':'false');});render();}));
   el.querySelector('#fl2-env').addEventListener('input',e=>{envHue=+e.target.value;el.querySelector('#fl2-envv').textContent=envHue+'°';render();});
   el.querySelector('#fl2-warm').addEventListener('input',e=>{warm=+e.target.value/100;el.querySelector('#fl2-warmv').textContent=warm<0.5?'暖 Warm':'冷 Cool';render();});
-  el.querySelector('#fl2-blend').addEventListener('click',e=>{woodcut=!woodcut;e.target.classList.toggle('on',woodcut);e.target.textContent=woodcut?'显示衔接后 Blended':'显示衔接前(木刻) Woodcut';render();});
-  el.querySelector('#fl2-exp').addEventListener('click',e=>{exposed=!exposed;e.target.classList.toggle('on',exposed);render();});
+  el.querySelector('#fl2-blend').addEventListener('click',e=>{woodcut=!woodcut;const on=woodcut;e.target.classList.toggle('on',on);e.target.setAttribute('aria-pressed',on?'true':'false');e.target.textContent=on?'显示衔接后 Blended':'显示衔接前(木刻) Woodcut';render();});
+  el.querySelector('#fl2-exp').addEventListener('click',e=>{exposed=!exposed;const on=exposed;e.target.classList.toggle('on',on);e.target.setAttribute('aria-pressed',on?'true':'false');render();});
   render();
 }
 
@@ -892,9 +915,9 @@ function wNether(el){
     <div class="whead"><span class="wt">冥灰色轮 · Nether-Gray Wheel</span><span class="wtag">Interactive</span></div>
     <div class="whint">选一个<b>环境色相</b>。冥灰色不是随便的灰——它是<b>低纯度、偏向环境补色</b>的一块。环境偏蓝绿，冥灰便微微紫红。<br>Pick an <b>environment hue</b>. The nether gray is no random gray — it's <b>low-purity, pushed toward the environment's complement</b>. Blue-green room → faintly violet-red flesh gray.</div>
     <div style="display:flex;gap:24px;align-items:center;flex-wrap:wrap">
-      <canvas id="nw-cv" width="220" height="220" style="cursor:crosshair;border-radius:50%"></canvas>
+      <canvas id="nw-cv" width="220" height="220" style="cursor:crosshair;border-radius:50%" role="img" aria-label="色相轮 Color wheel"></canvas>
       <div style="flex:1;min-width:180px">
-        <div class="ctrl"><label>环境色相 Environment <b id="nw-h">${envHue}°</b></label><input type="range" id="nw-slider" min="0" max="360" value="${envHue}"></div>
+        <div class="ctrl"><label>环境色相 Environment <b id="nw-h">${envHue}°</b></label><input type="range" id="nw-slider" min="0" max="360" value="${envHue}" aria-label="环境色相 Environment hue"></div>
         <div class="swatches" style="margin-top:16px" id="nw-sw"></div>
         <p style="font-size:13px;color:var(--chalk-dim);margin-top:12px;line-height:1.5" id="nw-note"></p>
       </div>
@@ -908,7 +931,6 @@ function wNether(el){
       ctx.arc(cx,cy,R,(a-1)*Math.PI/180,(a+1)*Math.PI/180);
       const c=hsl2rgb(a,0.7,0.5);ctx.fillStyle=rgb2hex(c);ctx.fill();
     }
-    // desaturated inner
     const g=ctx.createRadialGradient(cx,cy,0,cx,cy,R);
     g.addColorStop(0,'#181310');g.addColorStop(0.55,'rgba(24,19,16,0.75)');g.addColorStop(1,'rgba(24,19,16,0)');
     ctx.fillStyle=g;ctx.beginPath();ctx.arc(cx,cy,R,0,7);ctx.fill();
@@ -916,7 +938,6 @@ function wNether(el){
       ctx.beginPath();ctx.arc(x,y,7,0,7);ctx.fillStyle=col;ctx.strokeStyle='#ece3d4';ctx.lineWidth=2;ctx.fill();ctx.stroke();
       ctx.fillStyle='#ece3d4';ctx.font='10px IBM Plex Mono';ctx.fillText(lab,x-8,y-11);}
     const comp=(envHue+180)%360;
-    // line
     const r1=(envHue-90)*Math.PI/180,r2=(comp-90)*Math.PI/180;
     ctx.beginPath();ctx.moveTo(cx+Math.cos(r1)*R*0.9,cy+Math.sin(r1)*R*0.9);ctx.lineTo(cx+Math.cos(r2)*R*0.42,cy+Math.sin(r2)*R*0.42);
     ctx.strokeStyle='rgba(236,227,212,0.3)';ctx.lineWidth=1;ctx.stroke();
@@ -928,7 +949,8 @@ function wNether(el){
     const comp=(envHue+180)%360;
     const env=hsl2rgb(envHue,0.55,0.5), neth=hsl2rgb(comp,0.13,0.5);
     el.querySelector('#nw-sw').innerHTML=[[env,'环境色 ENV'],[neth,'冥灰 NETHER'],[hsl2rgb(comp,0.6,0.5),'补色(高纯) COMPLEMENT']].map(([c,t])=>{
-      const dark=lum(c)<120;return `<div class="swatch" style="background:${rgb2hex(c)};color:${dark?'rgba(255,255,255,.8)':'rgba(0,0,0,.6)'}">${t}</div>`;}).join('');
+      const dark=lum(c)<120;return `<div class="swatch" style="background:${rgb2hex(c)};color:${dark?'rgba(255,255,255,.8)':'rgba(0,0,0,.6)'}">${t}</div>`;
+    }).join('');
     el.querySelector('#nw-note').innerHTML=`环境 ${envHue}° → 补色 ${Math.round(comp)}°。冥灰取补色方向但<b style="color:var(--nether-2)">大幅降低纯度</b>，只留一丝色相——这正是它“像灰又不是灰”的原因。<br><span style="color:var(--chalk-faint)">Env ${envHue}° → complement ${Math.round(comp)}°. The nether gray borrows that direction but drops the saturation hard, keeping only a whisper of hue.</span>`;
   }
   el.querySelector('#nw-slider').addEventListener('input',e=>{envHue=+e.target.value;el.querySelector('#nw-h').textContent=envHue+'°';render();});
@@ -954,7 +976,7 @@ function wGlaze(el){
       <div style="text-align:center"><canvas id="gz-cv" width="200" height="200" class="wcanvas"></canvas><div style="font-family:var(--mono);font-size:10px;color:var(--oxide-bright);margin-top:6px">罩染后 GLAZED</div></div>
       <div style="flex:1;min-width:180px">
         <div class="ctrl"><label>罩染色 Glaze color</label><div id="gz-cols" style="display:flex;gap:6px;flex-wrap:wrap"></div></div>
-        <div class="ctrl" style="margin-top:14px"><label>厚度 Thickness <b id="gz-opv">40%</b></label><input type="range" id="gz-op" min="0" max="85" value="40"></div>
+        <div class="ctrl" style="margin-top:14px"><label>厚度 Thickness <b id="gz-opv">40%</b></label><input type="range" id="gz-op" min="0" max="85" value="40" aria-label="罩染厚度 Glaze thickness"></div>
         <p style="font-size:13px;color:var(--chalk-dim);margin-top:12px;line-height:1.5" id="gz-note"></p>
       </div>
     </div>
@@ -962,7 +984,7 @@ function wGlaze(el){
   const piles=threePiles(SKINS[1].rgb,175,0.35);
   drawSphere(el.querySelector('#gz-base'),piles.light,piles.mid,piles.shadow,{});
   const cv=el.querySelector('#gz-cv');
-  el.querySelector('#gz-cols').innerHTML=GLAZES.map((g,i)=>`<button class="wbtn ${i==gi?'on':''}" data-i="${i}" style="padding:6px 9px;font-size:10px"><span style="display:inline-block;width:10px;height:10px;background:${rgb2hex(g.rgb)};margin-right:4px;vertical-align:middle"></span>${g.zh}</button>`).join('');
+  el.querySelector('#gz-cols').innerHTML=GLAZES.map((g,i)=>`<button class="wbtn ${i==gi?'on':''}" data-i="${i}" aria-pressed="${i==gi?'true':'false'}" style="padding:6px 9px;font-size:10px"><span style="display:inline-block;width:10px;height:10px;background:${rgb2hex(g.rgb)};margin-right:4px;vertical-align:middle"></span>${g.zh}</button>`).join('');
   function render(){
     drawSphere(cv,piles.light,piles.mid,piles.shadow,{glaze:{rgb:GLAZES[gi].rgb,a:op}});
     const n=el.querySelector('#gz-note');
@@ -970,7 +992,7 @@ function wGlaze(el){
     else if(op<0.5)n.innerHTML=`薄罩：色调被<b style="color:var(--oxide-bright)">统一</b>，暗部更透、皮肤更暖，冥灰仍在呼吸。这是六胖子想要的“点睛”。<br>Thin: the key <b>unifies</b>, shadows deepen, flesh warms, the nether gray still breathes. This is the finishing touch.`;
     else n.innerHTML=`太重：<b style="color:var(--oxide-bright)">纯度压平、画面发闷</b>——正是书中警告的“无度地罩染”。以画为主，以染为辅。<br>Too heavy: purity flattens and the picture <b>chokes</b> — exactly the "unbounded glazing" the book warns against.`;
   }
-  el.querySelector('#gz-cols').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{gi=+b.dataset.i;el.querySelector('#gz-cols').querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));render();}));
+  el.querySelector('#gz-cols').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{gi=+b.dataset.i;el.querySelector('#gz-cols').querySelectorAll('button').forEach(x=>{const on=x===b;x.classList.toggle('on',on);x.setAttribute('aria-pressed',on?'true':'false');});render();}));
   el.querySelector('#gz-op').addEventListener('input',e=>{op=+e.target.value/100;el.querySelector('#gz-opv').textContent=e.target.value+'%';render();});
   render();
 }
@@ -1018,10 +1040,10 @@ function wPigments(el){
     const arrow=k=>sortKey===k?(asc?' ▲':' ▼'):'';
     el.querySelector('#pg-tbl').innerHTML=`
       <tr>
-        <th style="cursor:pointer" data-k="en">颜料 Pigment${arrow('en')}</th>
-        <th style="cursor:pointer" data-k="abs">吸油量 Oil abs.${arrow('abs')}</th>
-        <th style="cursor:pointer" data-k="band">肥瘦 Fat/Lean${arrow('band')}</th>
-        <th style="cursor:pointer" data-k="dry">干速 Drying${arrow('dry')}</th>
+        <th style="cursor:pointer" data-k="en" tabindex="0" role="button">颜料 Pigment${arrow('en')}</th>
+        <th style="cursor:pointer" data-k="abs" tabindex="0" role="button">吸油量 Oil abs.${arrow('abs')}</th>
+        <th style="cursor:pointer" data-k="band" tabindex="0" role="button">肥瘦 Fat/Lean${arrow('band')}</th>
+        <th style="cursor:pointer" data-k="dry" tabindex="0" role="button">干速 Drying${arrow('dry')}</th>
         <th>遮盖 Opacity</th>
         <th>备注 Notes</th>
       </tr>`+rows.map(p=>`<tr>
@@ -1032,7 +1054,10 @@ function wPigments(el){
         <td style="font-size:12px;color:var(--chalk-dim)">${p.op}</td>
         <td style="font-size:12.5px"><span class="body-zh-cell">${p.nz}</span><span class="body-en-cell" style="color:var(--chalk-dim)">${p.ne}</span></td>
       </tr>`).join('');
-    el.querySelectorAll('#pg-tbl th[data-k]').forEach(th=>th.addEventListener('click',()=>{const k=th.dataset.k;if(sortKey===k)asc=!asc;else{sortKey=k;asc=true;}render();}));
+    el.querySelectorAll('#pg-tbl th[data-k]').forEach(th=>{
+      th.addEventListener('click',()=>{const k=th.dataset.k;if(sortKey===k)asc=!asc;else{sortKey=k;asc=true;}render();});
+      th.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();const k=th.dataset.k;if(sortKey===k)asc=!asc;else{sortKey=k;asc=true;}render();}});
+    });
     syncCells();
   }
   render();
@@ -1042,7 +1067,6 @@ function syncCells(){
   document.querySelectorAll('.body-zh-cell').forEach(e=>e.style.display=(mode==='en')?'none':'block');
   document.querySelectorAll('.body-en-cell').forEach(e=>e.style.display=(mode==='zh')?'none':'block');
 }
-/* re-sync table cells whenever language changes */
 const _setLang=setLang;
 setLang=function(l){_setLang(l);syncCells();};
 document.getElementById('langset').addEventListener('click',e=>{if(e.target.dataset.lang)syncCells();});
@@ -1059,6 +1083,8 @@ window.addEventListener('keydown',e=>{
   if(e.key==='ArrowRight'&&current<SECTIONS.length-1)go(current+1);
   if(e.key==='ArrowLeft'&&current>0)go(current-1);
 });
+// close mobile nav on Escape
+window.addEventListener('keydown',e=>{if(e.key==='Escape'&&document.body.classList.contains('nav-open'))toggleNav(false);});
 </script>
 </body>
 </html>
