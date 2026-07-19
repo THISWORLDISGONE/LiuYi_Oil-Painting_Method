@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>六胖子油画技法 · The Six-Fatty Oil Method</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ground:#14100c; --ground-2:#1b1611; --ground-3:#241d16; --ground-4:#2e251c;
+  --chalk:#ece3d4; --chalk-2:#c9bda9; --chalk-dim:#9a8d78; --chalk-faint:#6d6152;
+  --oxide:#c06b3e; --oxide-bright:#dd8551; --oxide-deep:#8a4a28;
+  --nether:#928da0; --nether-2:#a6a0b6;
+  --gild:#c9a24b; --gild-dim:#8f7838;
+  --line:rgba(236,227,212,.11); --line-2:rgba(236,227,212,.06);
+  --serif-d:'Fraunces','Noto Serif SC',Georgia,serif;
+  --serif-b:'Newsreader','Noto Serif SC',Georgia,serif;
+  --mono:'IBM Plex Mono','Noto Serif SC',monospace;
+  --sb-w:300px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--ground); color:var(--chalk);
+  font-family:var(--serif-b); font-size:17px; line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+  background-image:
+    radial-gradient(1200px 700px at 78% -8%, rgba(192,107,62,.09), transparent 60%),
+    radial-gradient(900px 600px at 5% 108%, rgba(146,138,160,.07), transparent 60%);
+  background-attachment:fixed;
+}
+::selection{background:var(--oxide);color:#160f0a}
+a{color:var(--oxide-bright);text-decoration:none}
+/* ---- layout ---- */
+.wrap{display:flex;min-height:100vh}
+.sidebar{
+  width:var(--sb-w);flex:0 0 var(--sb-w);position:sticky;top:0;height:100vh;
+  overflow-y:auto;border-right:1px solid var(--line);
+  background:linear-gradient(180deg,var(--ground-2),var(--ground));
+  padding:26px 0 60px;scrollbar-width:thin;scrollbar-color:var(--ground-4) transparent;
+}
+.sidebar::-webkit-scrollbar{width:7px}
+.sidebar::-webkit-scrollbar-thumb{background:var(--ground-4);border-radius:4px}
+.brand{padding:0 26px 20px}
+.brand .zh{font-family:var(--serif-d);font-weight:600;font-size:27px;letter-spacing:.06em;line-height:1.15;color:var(--chalk)}
+.brand .zh b{color:var(--oxide-bright);font-weight:600}
+.brand .en{font-family:var(--mono);font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--chalk-dim);margin-top:9px}
+.brand .by{font-size:13px;color:var(--chalk-faint);margin-top:11px;font-style:italic;line-height:1.5}
+.controls{padding:0 20px 16px;display:flex;flex-direction:column;gap:12px}
+.langset{display:flex;border:1px solid var(--line);border-radius:2px;overflow:hidden}
+.langset button{flex:1;background:transparent;border:0;color:var(--chalk-dim);
+  font-family:var(--mono);font-size:11px;letter-spacing:.12em;padding:9px 4px;cursor:pointer;transition:.18s}
+.langset button+button{border-left:1px solid var(--line)}
+.langset button.on{background:var(--oxide);color:#160f0a;font-weight:600}
+.langset button:hover:not(.on){color:var(--chalk);background:var(--ground-3)}
+.search{position:relative}
+.search input{width:100%;background:var(--ground);border:1px solid var(--line);border-radius:2px;
+  color:var(--chalk);font-family:var(--serif-b);font-size:14px;padding:9px 12px 9px 32px;outline:none;transition:.18s}
+.search input:focus{border-color:var(--oxide-deep)}
+.search input::placeholder{color:var(--chalk-faint)}
+.search svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);width:14px;height:14px;stroke:var(--chalk-faint);fill:none;stroke-width:2}
+nav{padding:6px 0}
+.part-h{font-family:var(--mono);font-size:10px;letter-spacing:.24em;text-transform:uppercase;
+  color:var(--gild-dim);padding:16px 26px 7px;display:flex;align-items:center;gap:9px}
+.part-h::before{content:"";width:14px;height:1px;background:var(--gild-dim)}
+.navitem{display:flex;gap:11px;align-items:baseline;padding:7px 26px;cursor:pointer;
+  border-left:2px solid transparent;transition:.14s;color:var(--chalk-2)}
+.navitem:hover{background:var(--ground-3);color:var(--chalk)}
+.navitem.on{border-left-color:var(--oxide);background:linear-gradient(90deg,rgba(192,107,62,.13),transparent);color:var(--chalk)}
+.navitem .n{font-family:var(--mono);font-size:11px;color:var(--chalk-faint);min-width:20px;padding-top:2px}
+.navitem.on .n{color:var(--oxide-bright)}
+.navitem .t{line-height:1.28}
+.navitem .t .zh{font-size:15px;font-weight:500}
+.navitem .t .en{font-size:11px;color:var(--chalk-dim);font-family:var(--mono);letter-spacing:.03em;margin-top:1px;display:none}
+body.lang-en .navitem .t .zh{display:none}
+body.lang-en .navitem .t .en{display:block;font-size:12.5px;font-family:var(--serif-b);letter-spacing:0;color:var(--chalk-2)}
+body:not(.lang-zh) .navitem .t .en{display:block}
+.navitem.hide{display:none}
+/* ---- main ---- */
+main{flex:1;min-width:0;max-width:920px;margin:0 auto;padding:0 clamp(24px,5vw,72px)}
+.topbar{position:sticky;top:0;z-index:20;display:none;align-items:center;gap:14px;
+  padding:12px 0;background:linear-gradient(180deg,var(--ground) 70%,transparent);margin-bottom:8px}
+.hamburger{background:var(--ground-3);border:1px solid var(--line);border-radius:3px;width:40px;height:38px;cursor:pointer;display:flex;flex-direction:column;gap:4px;align-items:center;justify-content:center}
+.hamburger span{width:18px;height:2px;background:var(--chalk)}
+.article{padding:46px 0 120px;animation:rise .5s cubic-bezier(.2,.7,.2,1)}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--oxide-bright);display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.eyebrow::after{content:"";flex:1;height:1px;background:var(--line)}
+h1.title{font-family:var(--serif-d);font-weight:600;font-size:clamp(34px,5.5vw,58px);line-height:1.04;letter-spacing:.005em;color:var(--chalk)}
+h1.title .en-sub{display:block;font-family:var(--serif-b);font-weight:400;font-style:italic;font-size:clamp(18px,2.4vw,25px);color:var(--nether-2);margin-top:12px;letter-spacing:0}
+.lede{font-size:20px;line-height:1.62;color:var(--chalk-2);margin:26px 0 8px;font-weight:400;border-left:2px solid var(--oxide-deep);padding-left:22px}
+.body-zh,.body-en{margin-top:10px}
+.body-en{border-top:1px dashed var(--line);margin-top:34px;padding-top:30px}
+body.lang-zh .body-en{display:none}
+body.lang-en .body-zh{display:none}
+body.lang-en .body-en{border-top:0;margin-top:10px;padding-top:0}
+.langtag{font-family:var(--mono);font-size:10px;letter-spacing:.2em;color:var(--chalk-faint);text-transform:uppercase;margin-bottom:14px;display:none}
+body.lang-both .langtag{display:block}
+.article h2{font-family:var(--serif-d);font-weight:600;font-size:26px;margin:38px 0 6px;color:var(--chalk);letter-spacing:.01em}
+.article h3{font-family:var(--serif-b);font-weight:600;font-size:19px;margin:26px 0 4px;color:var(--oxide-bright)}
+.article p{margin:14px 0}
+.article strong{color:var(--chalk);font-weight:600}
+.article em{color:var(--nether-2);font-style:italic}
+.article ul{margin:14px 0 14px 4px;list-style:none}
+.article li{padding:5px 0 5px 24px;position:relative}
+.article li::before{content:"";position:absolute;left:2px;top:15px;width:7px;height:7px;border:1px solid var(--oxide);transform:rotate(45deg)}
+.kw{color:var(--gild);font-weight:500}
+.term{border-bottom:1px dotted var(--chalk-faint);cursor:help}
+/* supplement / editorial callouts */
+.supp{background:linear-gradient(180deg,var(--ground-2),var(--ground-3));border:1px solid var(--line);
+  border-left:3px solid var(--gild);border-radius:3px;padding:18px 22px;margin:26px 0}
+.supp .lbl{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gild);margin-bottom:8px}
+.supp p{margin:8px 0}
+.quote{border:0;border-left:3px solid var(--nether);padding:6px 0 6px 22px;margin:26px 0;font-style:italic;color:var(--nether-2);font-size:19px;font-family:var(--serif-b)}
+.quote cite{display:block;font-style:normal;font-size:13px;color:var(--chalk-faint);font-family:var(--mono);letter-spacing:.1em;margin-top:10px}
+/* data table */
+.tbl-wrap{overflow-x:auto;margin:24px 0;border:1px solid var(--line);border-radius:3px}
+table.data{width:100%;border-collapse:collapse;font-size:14px;min-width:520px}
+table.data th{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--chalk-dim);
+  text-align:left;padding:12px 14px;border-bottom:1px solid var(--line);background:var(--ground-2);font-weight:500}
+table.data td{padding:11px 14px;border-bottom:1px solid var(--line-2);vertical-align:top}
+table.data tr:last-child td{border-bottom:0}
+table.data tr:hover td{background:var(--ground-2)}
+.pill{font-family:var(--mono);font-size:10px;letter-spacing:.06em;padding:2px 8px;border-radius:10px;white-space:nowrap;display:inline-block}
+.pill.lean{background:rgba(146,138,160,.16);color:var(--nether-2)}
+.pill.med{background:rgba(201,162,75,.15);color:var(--gild)}
+.pill.fat{background:rgba(192,107,62,.17);color:var(--oxide-bright)}
+.pill.fast{background:rgba(120,170,120,.15);color:#94c48f}
+.pill.slow{background:rgba(192,107,62,.14);color:var(--oxide-bright)}
+.pill.medd{background:rgba(201,162,75,.13);color:var(--gild)}
+/* interactive widget shell */
+.widget{background:radial-gradient(120% 120% at 50% 0%,var(--ground-3),var(--ground-2));
+  border:1px solid var(--line);border-radius:5px;padding:26px;margin:32px 0;box-shadow:0 24px 60px -30px #000}
+.widget .whead{display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-bottom:20px;flex-wrap:wrap}
+.widget .whead .wt{font-family:var(--serif-d);font-weight:600;font-size:20px}
+.widget .whead .wtag{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--oxide-bright);border:1px solid var(--oxide-deep);padding:4px 10px;border-radius:12px}
+.widget .whint{font-size:14px;color:var(--chalk-dim);margin-bottom:18px;line-height:1.55}
+.ctrl-row{display:flex;flex-wrap:wrap;gap:18px;margin:14px 0}
+.ctrl{flex:1;min-width:150px}
+.ctrl label{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--chalk-dim);margin-bottom:7px;text-transform:uppercase}
+.ctrl label b{color:var(--oxide-bright);font-weight:500}
+input[type=range]{-webkit-appearance:none;width:100%;height:3px;background:var(--ground-4);border-radius:3px;outline:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--oxide-bright);cursor:pointer;border:2px solid var(--ground);box-shadow:0 0 0 1px var(--oxide-deep)}
+input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--oxide-bright);cursor:pointer;border:2px solid var(--ground)}
+.swatches{display:flex;gap:0;border-radius:3px;overflow:hidden;border:1px solid var(--line)}
+.swatch{flex:1;height:64px;display:flex;flex-direction:column;justify-content:flex-end;padding:6px 8px;font-family:var(--mono);font-size:9.5px;color:rgba(0,0,0,.6);font-weight:600}
+.wcanvas{border-radius:4px;display:block;background:var(--ground);width:100%}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:11px;color:var(--chalk-dim);margin-top:14px}
+.legend span{display:flex;align-items:center;gap:6px}
+.legend i{width:11px;height:11px;border-radius:2px;display:inline-block}
+.wbtn{background:var(--ground-4);border:1px solid var(--line);color:var(--chalk);font-family:var(--mono);
+  font-size:11px;letter-spacing:.08em;padding:8px 14px;border-radius:3px;cursor:pointer;transition:.16s;text-transform:uppercase}
+.wbtn:hover{border-color:var(--oxide-deep);color:var(--oxide-bright)}
+.wbtn.on{background:var(--oxide);color:#160f0a;border-color:var(--oxide)}
+.verdict{font-family:var(--mono);font-size:13px;padding:12px 16px;border-radius:3px;margin-top:16px;letter-spacing:.03em;line-height:1.5}
+.verdict.good{background:rgba(120,170,120,.12);color:#a7d3a1;border:1px solid rgba(120,170,120,.3)}
+.verdict.bad{background:rgba(192,107,62,.12);color:var(--oxide-bright);border:1px solid var(--oxide-deep)}
+/* fat-over-lean stack */
+.stack{display:flex;flex-direction:column-reverse;gap:2px;margin-top:6px}
+.layer{position:relative;border-radius:2px;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;cursor:default;overflow:hidden}
+.layer .lname{font-family:var(--mono);font-size:11px;letter-spacing:.05em;color:var(--chalk);z-index:2}
+.layer .lval{font-family:var(--mono);font-size:11px;z-index:2}
+.layer .fatctrl{display:flex;align-items:center;gap:8px;z-index:2;min-width:130px}
+.footer{border-top:1px solid var(--line);padding:40px 0 60px;color:var(--chalk-faint);font-size:13px;line-height:1.7}
+.footer .mono{font-family:var(--mono);font-size:11px;letter-spacing:.06em}
+.pager{display:flex;justify-content:space-between;gap:16px;margin-top:60px;border-top:1px solid var(--line);padding-top:28px}
+.pager a{flex:1;padding:16px 20px;border:1px solid var(--line);border-radius:4px;transition:.18s;cursor:pointer;display:block}
+.pager a:hover{border-color:var(--oxide-deep);background:var(--ground-2)}
+.pager .dir{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--chalk-faint)}
+.pager .nm{font-family:var(--serif-d);font-size:17px;color:var(--chalk);margin-top:5px}
+.pager .next{text-align:right}
+.pager a.empty{visibility:hidden}
+.scrim{display:none}
+@media(max-width:920px){
+  :root{--sb-w:280px}
+  .sidebar{position:fixed;left:0;top:0;z-index:60;transform:translateX(-100%);transition:transform .3s;box-shadow:24px 0 60px -20px #000}
+  body.nav-open .sidebar{transform:none}
+  .topbar{display:flex}
+  .scrim{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:50;display:none}
+  body.nav-open .scrim{display:block}
+  main{max-width:100%}
+  .article{padding:20px 0 90px}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto}}
+</style>
+</head>
+<body class="lang-zh">
+<div class="scrim" onclick="toggleNav(false)"></div>
+<div class="wrap">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="zh"><b>六胖子</b>油画技法</div>
+      <div class="en">The Six-Fatty Oil Method</div>
+      <div class="by">刘溢 (六胖子) 著 · 司徒勇 绘<br>Liu Yi &amp; Situ Yong · 人民美术出版社 2012</div>
+    </div>
+    <div class="controls">
+      <div class="langset" id="langset">
+        <button data-lang="zh" class="on">中文</button>
+        <button data-lang="both">双语</button>
+        <button data-lang="en">EN</button>
+      </div>
+      <div class="search">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+        <input id="search" type="search" placeholder="搜索技法 / search…" autocomplete="off">
+      </div>
+    </div>
+    <nav id="nav"></nav>
+  </aside>
+  <main>
+    <div class="topbar">
+      <button class="hamburger" onclick="toggleNav()"><span></span><span></span><span></span></button>
+      <div style="font-family:var(--serif-d);font-weight:600;font-size:18px">六胖子油画技法</div>
+    </div>
+    <article class="article" id="article"></article>
+    <div class="footer">
+      <div class="mono">SYNTHESIZED KNOWLEDGE BASE · 综合知识库</div>
+      <p style="margin-top:10px">本知识库依据《六胖子油画技法》（刘溢 著，司徒勇 绘，人民美术出版社 2012，ISBN 978-7-102-06093-4）的技法与理念重新编写、翻译并补充，未复制原书文字或图版。补充内容以金色标注。<br>
+      This is an original bilingual reconstruction of the <em>ideas and techniques</em> of Liu Yi's manual — rewritten, translated, and expanded. No text or plates from the book are reproduced. Editorial additions are marked in gold.</p>
+    </div>
+  </main>
+</div>
+<script>
+/* ============================================================
+   KNOWLEDGE BASE — synthesized & translated from Liu Yi's method
+   Bodies are original paraphrase/expansion (no source text copied)
+   ============================================================ */
+const SECTIONS = [
+/* ---------- PART I : PHILOSOPHY ---------- */
+{
+ id:"who", part:"画法 · The Method", num:"00",
+ zt:"六胖子是谁", et:"Who Is “Six-Fatty”?",
+ lede_zh:"“六胖子画法”不是一个人的怪癖，而是一套自成体系的现代写实油画方法——用新材料，快而稳地复现古典大师的画面。",
+ lede_en:"The “Six-Fatty Method” is not one painter's quirk but a self-contained modern system for realist oil painting — using new materials to reach the old-master surface, quickly and durably.",
+ zh:`<p><strong>刘溢</strong>，1957 年生，1978–1982 就读于中央美术学院油画系，1991 年移居加拿大成为职业画家。他的代表作《2008–北京》（俗称《搓麻将的女人》）在国际上引发巨大讨论，作品由佳士得、苏富比等拍卖行拍卖。因体型之故，网友昵称他“六胖子”，这套画法便随之得名。</p>
+ <p>约 2006 年，刘溢在雅昌网西画版开帖，专谈这套融合了西方油画“<span class="kw">肥压瘦（Fat over Lean）</span>”定律的画法，参与讨论的六位网友与他一道，把帖子做成了《六胖子画室》。后来油画修复专家 <strong>司徒勇</strong>（1957 年生于上海，旧金山与上海的油画修复权威）加入，补上了材料学与保存的严谨底子。本书前半讲理念与技法（刘溢），后半讲材料与修复（司徒勇）。</p>
+ <p>它的核心主张只有一句：<em>学古典大师那种精制的态度和画风，但别花几年画一张。</em>办法是充分利用现代画材——丙烯底料做画底、醇酸树脂做起稿、三堆色与冥灰色处理皮肤——把凡·埃克、卡拉瓦乔、安格尔那样的画面，快速有效地实现出来。</p>`,
+ en:`<p><strong>Liu Yi</strong> (b. 1957) studied oil painting at the Central Academy of Fine Arts (1978–82) and emigrated to Canada in 1991 to paint professionally. His signature canvas <em>2008–Beijing</em> (popularly “Women Playing Mahjong”) drew international debate; his work sells through Christie's and Sotheby's. Chinese forum users nicknamed him <strong>Liù Pàngzi — “Six-Fatty”</strong>, and the method took the name with him.</p>
+ <p>Around 2006 Liu opened a thread on the Artron western-painting board to lay out a method built on oil painting's iron law — <span class="kw">Fat over Lean</span>. Six regulars joined him, and the thread became “Six-Fatty's Studio.” Later the conservator <strong>Situ Yong</strong> (b. 1957, Shanghai; a restoration authority in San Francisco and Shanghai) joined and supplied the rigorous materials-and-preservation backbone. In the book, Liu writes the ideas and technique; Situ writes the materials and conservation.</p>
+ <p>Its whole thesis is one sentence: <em>keep the refined attitude and surface of the old masters, but don't spend years on a single canvas.</em> The route is modern materials — an acrylic ground, an alkyd underpainting, and the “three-pile color” and “nether gray” for skin — used to reach the look of Van Eyck, Caravaggio, or Ingres quickly and soundly.</p>`,
+ widget:null
+},
+{
+ id:"allaprima", part:"画法 · The Method", num:"01",
+ zt:"一次性画法", et:"Alla Prima — Painting in One Pass",
+ lede_zh:"油画的每一次“提速”，都会走向一次性画法。六胖子也是一次性完成——但它是“一片一片地”一次完成，薄而平整。",
+ lede_en:"Every time oil painting speeds up, it drifts toward alla prima. The Six-Fatty surface is finished in one pass too — but section by section, thin and even.",
+ zh:`<p><span class="kw">“Alla Prima”</span>（意大利语“第一次”）就是一次性画法——不靠层层罩染，趁颜料还湿就一次画到位。美术史上擅长此道的老手不少：提香、博斯、卡拉瓦乔、哈尔斯，后来还有左恩、塞尚、萨金特、卡萨特、霍默。他们风格迥异，却人人都能“雄心涂笔，一抹一个效果”。</p>
+ <p>六胖子画法属于<strong>老派的一次性</strong>：由于要局部深入刻画，它是一片一片地一次完成——今天一片脸，明天一片手，好些天才拼成整幅。它的画面<em>“薄而平整”</em>：色层薄、笔触工整、色彩混接细腻，偶有厚色若非必要笔触，也会被抹平或与四周混匀。薄平色层覆盖力弱，解决办法是<strong>事先多画一层差不多的色彩底稿</strong>。</p>
+ <h3>和后期印象派 / 苏联画法的分别</h3>
+ <p>印象派与所谓“苏联画法”常留下孤立、明显、坑洼的笔触；缝隙里积油、薄厚不匀，上光油时高低不平会产生反光干扰，画面油腻如厨房抹布。六胖子反其道：色层薄而平均，干得快，是最快能上光油的画法；上光之前吸油均匀、便于观察修改，上光之后“瞬间一派雍容”。</p>`,
+ en:`<p><span class="kw">Alla prima</span> (Italian, “at first”) means finishing in one pass — no build-up of glazes; you paint into wet paint and get it right the first time. Art history is full of masters of it: Titian, Bosch, Caravaggio, Hals, then Zorn, Cézanne, Sargent, Cassatt, Homer. Wildly different styles, yet each could “commit the brush and land the effect in one stroke.”</p>
+ <p>The Six-Fatty surface is an <strong>old-school alla prima</strong>: because each passage is fully modeled, it is finished <em>a patch at a time</em> — a face today, a hand tomorrow — until the whole assembles over days. Its surface is <em>thin and level</em>: thin color, tidy strokes, delicately fused transitions. Any thick paint that isn't a necessary mark is flattened or blended away. Thin even films cover poorly, so the fix is to <strong>lay down an approximate color underpainting first</strong>.</p>
+ <h3>Versus late-Impressionist / “Soviet-school” handling</h3>
+ <p>Impressionist and so-called Soviet handling leave isolated, obvious, pitted strokes; oil pools in the gaps, the film is uneven, and when varnished the peaks and troughs throw off scattered reflections — an oily surface like a kitchen rag. Six-Fatty inverts this: thin, even color that dries fast and takes varnish soonest. Before varnishing it absorbs oil evenly (easy to read and correct); after varnishing it turns, in Liu's phrase, “instantly serene.”</p>`,
+ widget:null
+},
+{
+ id:"wetvsindirect", part:"画法 · The Method", num:"02",
+ zt:"湿盖湿 · 间接画法", et:"Wet-on-Wet & the Indirect Method",
+ lede_zh:"湿盖湿更重色彩的覆盖与混合，一次性更重铺设与衔接；间接画法则靠多层罩染。六胖子取三家之长。",
+ lede_en:"Wet-on-wet favours covering and fusing; alla prima favours laying-in and joining; the indirect method builds through many glazes. Six-Fatty borrows from all three.",
+ zh:`<p><strong>湿盖湿（Wet-on-wet）</strong>字面就是“湿色加在湿色上”。它当然也是一次性画法，但更强调色彩的覆盖、混合与厚重感——凡·埃克《阿尔诺芬尼夫妇像》是极精致的湿盖湿，伦勃朗《屠宰的牛》则生猛不精合。相比之下，平面性的一次性画法更看重色彩的铺设与笔触的衔接（或刻意不衔接）。</p>
+ <p><strong>间接画法（Indirect）</strong>是古典多层法：素描底→单色塑造→逐层透明罩染，靠层次叠加出深度与光泽。它慢，但油画特有的“宝石般”通透多半来自它。</p>
+ <div class="supp"><div class="lbl">补充 · Editorial</div>
+ <p>三种方法并非对立。<strong>六胖子的实操是“混血”</strong>：先用一次性/湿盖湿把每一片皮肤一次画足（直接法的效率），最后再用一层薄薄的罩染统一色调、增加通透（间接法的韵味）。理解这条“直接为主、间接为辅”的主线，后面的三堆色、冥灰色、罩染就都能串起来。</p></div>`,
+ en:`<p><strong>Wet-on-wet</strong> literally means wet color laid into wet color. It is a form of alla prima, but it leans on covering, fusing, and the weight of the paint — Van Eyck's <em>Arnolfini Portrait</em> is exquisite wet-on-wet; Rembrandt's <em>Slaughtered Ox</em> is wet-on-wet at full ferocity, unfused. A flatter alla prima, by contrast, cares more about how color is laid in and how strokes join (or deliberately don't).</p>
+ <p>The <strong>indirect method</strong> is the classical multi-layer route: drawing → monochrome modeling → successive transparent glazes, building depth and glow by accumulation. It is slow, but the jewel-like transparency unique to oil largely comes from it.</p>
+ <div class="supp"><div class="lbl">Editorial</div>
+ <p>The three are not rivals. <strong>In practice Six-Fatty is a hybrid</strong>: model each patch of skin fully in one direct/wet-on-wet pass (the efficiency of the direct method), then unify and deepen with one thin glaze at the end (the resonance of the indirect method). Hold this “direct-first, indirect-to-finish” spine and the later chapters — three-pile color, nether gray, glazing — all connect to it.</p></div>`,
+ widget:null
+},
+{
+ id:"fatlean", part:"画法 · The Method", num:"03",
+ zt:"肥压瘦", et:"Fat over Lean",
+ lede_zh:"油画唯一不可违反的定律：每一层都要比它下面那层更“肥”（含油更多、更柔韧）。违反它，画面迟早开裂。",
+ lede_en:"The one law of oil painting you cannot break: every layer must be “fatter” — more oil, more flexible — than the one beneath it. Break it and the film will crack.",
+ zh:`<p><span class="kw">Fat over Lean（肥压瘦）</span>：油多为肥，油少为瘦。永远让上层比下层更肥。原因在于油的干燥化学：</p>
+ <ul>
+ <li>油彩的“干”其实是<strong>氧化固化</strong>，需要吸入氧气，因此总是从接触空气的表面开始，由表及里。薄色层干得比厚色层快。</li>
+ <li>若厚（肥）色层未干就被薄（瘦）色层盖住，上面的瘦层封住了下面的氧化，自己先干、变脆；下面的肥层还在膨胀收缩。</li>
+ <li>亚麻油吸氧后重量约增 <strong>17%</strong>、体积随之膨胀，氧化后期挥发物离去又收缩。层次间干燥速度不一，表面已干的脆层就会<em>龟裂——形如鳄鱼皮，称“鳄鱼纹”</em>。</li>
+ </ul>
+ <p><strong>柔压刚</strong>：肥颜料干后柔韧，能随环境与支撑物伸缩；瘦颜料干后脆硬。用瘦盖肥＝刚压柔，表面必裂。所以肥压瘦亦即 <em>elastic over less-elastic</em>。</p>
+ <h3>怎样控制肥瘦</h3>
+ <ul>
+ <li>逐层增加媒介剂中<strong>油</strong>相对<strong>稀释剂（松节油）</strong>的比例；</li>
+ <li>或逐层减少稀释剂，直到最后用纯颜料完成；</li>
+ <li>或用同一种媒介剂（如醇酸树脂）而逐层加大用量。</li>
+ </ul>`,
+ en:`<p><span class="kw">Fat over Lean</span>: more oil = fat, less oil = lean. Always keep the upper layer fatter than the one below. The reason is the chemistry of drying:</p>
+ <ul>
+ <li>Oil paint doesn't “dry,” it <strong>oxidizes and solidifies</strong> — it needs oxygen, so curing starts at the air-facing surface and works inward. Thin films cure faster than thick ones.</li>
+ <li>If a thick (fat) layer is covered by a thin (lean) layer before it has cured, the lean film seals off the oxidation below, sets first, and turns brittle — while the fat layer beneath is still moving.</li>
+ <li>Linseed oil gains about <strong>17% in weight</strong> as it takes on oxygen, swelling in volume; later, as volatiles leave, it shrinks again. Mismatched drying rates crack the already-set brittle surface into <em>alligator cracking (龟裂 / “crocodile skin”)</em>.</li>
+ </ul>
+ <p><strong>Flexible over rigid</strong>: fat paint dries supple and moves with humidity and support; lean paint dries hard and brittle. Lean-over-fat = rigid-over-flexible, and the surface must split. So Fat over Lean is also <em>elastic over less-elastic</em>.</p>
+ <h3>Ways to control it</h3>
+ <ul>
+ <li>Raise the ratio of <strong>oil</strong> to <strong>solvent (turpentine)</strong> in the medium layer by layer;</li>
+ <li>or reduce the solvent each layer until the last is pure paint;</li>
+ <li>or keep one medium (e.g. alkyd resin) and simply increase how much you use each layer.</li>
+ </ul>`,
+ widget:"fatlean"
+},
+/* ---------- PART II : MATERIALS ---------- */
+{
+ id:"supports", part:"材料 · Materials", num:"04",
+ zt:"支撑物", et:"Supports",
+ lede_zh:"你把画画在什么上面，那就是支撑物。六胖子偏爱刚性支撑——木板、贴板画布、聚酯布——因为它们不随湿度乱动。",
+ lede_en:"Whatever you paint on is the support. Six-Fatty prefers rigid supports — panels, canvas mounted on board, polyester — because they don't move with humidity.",
+ zh:`<p>“支撑物”即绘画的载体：画在木板上叫木板油画，画在布上叫布面油画，还有纸板、金属板油画等。软支撑（画布）随湿度不断伸缩，是开裂脱落的主因；刚性支撑几乎不动，最适合薄平的六胖子色层。</p>
+ <h3>画布：三种纤维</h3>
+ <p>关于亚麻/棉/聚酯的取舍见下表。要点：<strong>聚酯布</strong>吸湿率仅约 0.4%（亚麻约 12%、棉约 8.5%），几乎不随湿度变形，强度高、抗酸抗腐、不霉——最适合六胖子技法，但无吸收性，只能用丙烯底。</p>
+ <div class="tbl-wrap"><table class="data">
+ <tr><th>纤维 Fibre</th><th>吸湿率 Moisture</th><th>特点 Notes</th></tr>
+ <tr><td>亚麻 Linen</td><td>≈12%</td><td>传统首选；须 100% 长纤维、雨露麻、湿纺、织密、除酸可延寿一倍</td></tr>
+ <tr><td>棉 Cotton</td><td>≈8.5%</td><td>被低估；配合底料后与亚麻差别其实不大</td></tr>
+ <tr><td>聚酯 Polyester</td><td>≈0.4%</td><td>尺寸最稳、强度最高；无吸收性→只配丙烯底；船帆坯布最佳</td></tr>
+ </table></div>
+ <h3>刚性支撑：板</h3>
+ <p>实木易裂，故多用人造板：<strong>胶合板</strong>（多层薄木交错胶合，须硬木面板如白桦/白杨、耐沸水级 WPB 胶）与<strong>纤维板</strong>（无木纹，处理过的更结实少变形）。板的正、反、侧三面都要涂底，使应力一致、防止翘曲；侧面/断口须密封防潮。</p>
+ <h3>辅助支撑与板框</h3>
+ <p>扩张型内框用木楔或螺栓撑开框角绷紧画布。<strong>板框（Panel Stretcher）</strong>——布绷在带支撑框的板上、布板不粘合、可随时取下修复——是六胖子画室的招牌解法；书中还记录了三维立体板框源于此。</p>`,
+ en:`<p>The support is whatever carries the paint: on wood → panel painting; on cloth → canvas painting; also board and metal. A soft support (canvas) expands and contracts endlessly with humidity — the chief cause of cracking and flaking. Rigid supports barely move, which suits the thin, flat Six-Fatty film best.</p>
+ <h3>Canvas: three fibres</h3>
+ <p>The trade-offs are below. Key point: <strong>polyester</strong> absorbs only ≈0.4% moisture (linen ≈12%, cotton ≈8.5%), so it barely deforms — strong, acid- and rot-proof, never mildews. Ideal for the method, but it has no absorbency, so it takes only an acrylic ground.</p>
+ <div class="tbl-wrap"><table class="data">
+ <tr><th>Fibre</th><th>Moisture</th><th>Notes</th></tr>
+ <tr><td>Linen</td><td>≈12%</td><td>Traditional first choice; insist on 100% long-fibre, dew-retted, wet-spun, tight weave; de-acidifying ≈doubles its life</td></tr>
+ <tr><td>Cotton</td><td>≈8.5%</td><td>Underrated; once primed, the gap to linen is small</td></tr>
+ <tr><td>Polyester</td><td>≈0.4%</td><td>Most dimensionally stable, strongest; no absorbency → acrylic ground only; sailcloth greige is best</td></tr>
+ </table></div>
+ <h3>Rigid supports: panels</h3>
+ <p>Solid wood splits, so use manufactured board: <strong>plywood</strong> (thin plies cross-glued; use a hardwood face like birch/poplar and boil-proof WPB glue) and <strong>fibreboard/hardboard</strong> (no grain; tempered is tougher and warps less). Prime front, back <em>and</em> edges so stresses match and the panel won't bow; seal the edges/plies against moisture.</p>
+ <h3>Auxiliary supports & the panel stretcher</h3>
+ <p>An expansion stretcher opens its corners with keys or bolts to re-tension canvas. The <strong>panel stretcher</strong> — canvas stretched over a braced panel, cloth and panel <em>unglued</em> so it lifts off for future repair — is a signature Six-Fatty solution; the book credits the three-dimensional panel stretcher to the studio itself.</p>`,
+ widget:null
+},
+{
+ id:"ground", part:"材料 · Materials", num:"05",
+ zt:"画底", et:"The Ground (Priming)",
+ lede_zh:"画底是不可逆的准备工作，它本质地决定了油画的外观与质量。六胖子用丙烯底 + 醇酸树脂底取代古法胶底与油底。",
+ lede_en:"The ground is an irreversible act of preparation — it fundamentally decides how the painting looks and lasts. Six-Fatty replaces old glue/oil grounds with acrylic and alkyd.",
+ zh:`<p>裁好的板或绷好的布不能直接画：需要一层<strong>画底（ground / gesso）</strong>建立均匀的吸收性与合适的牙口。它决定了色层能否咬住、画面粗细、乃至最终质感。做底“与其说是为了以后的画，不如说是以后画时还要根据它来操作”。</p>
+ <h3>丙烯底（Acrylic gesso）</h3>
+ <p>牢固、柔韧、耐久、快干，是现代首选。但含约 45% 水，须彻底挥发；水会重新溶解动物胶，故贴坯布若用了动物胶，再上丙烯底会脱胶。<strong>不可不用，但不能重用</strong>——厚涂反而降低黏合、日后开裂；往里加大白粉/钛白超过 20% 同样危险。做好的底至少养护数日再画。</p>
+ <h3>醇酸树脂底（Alkyd ground）</h3>
+ <p>更接近传统油性底，与油彩亲和好、柔韧，适合大幅画布（布抖动也不易裂）。但直接上板/布会吸油，须先刷一层<strong>丙烯胶底做隔离层</strong>。醇酸干得更慢，更需耐心：每刮一道，等它干透再刮下一道，砂纸打磨，反复可做到“纱绸般”细腻。</p>
+ <div class="supp"><div class="lbl">补充 · SID 变色</div>
+ <p><strong>源于支撑物的变色（Support-Induced Discolouration, SID）</strong>：天然支撑里的有色物质会被丙烯底料中的水溶出、浮到表面污染画底。对策是先在支撑物上刷一层<em>丙烯底胶（isolation size）</em>封堵；若最终用油性底或直接油彩，则无需顾虑 SID。</p></div>
+ <h3>涂布方式</h3>
+ <p>大板刷平涂，或长板油刮平（作者偏爱后者，甚至用擦玻璃的平面刮板）。目标是统一、均匀的吸收性。</p>`,
+ en:`<p>A cut panel or stretched canvas can't be painted directly: it needs a <strong>ground (gesso)</strong> to establish even absorbency and the right tooth. The ground decides whether paint keys in, how coarse the surface reads, and the final feel. As Liu puts it, you make a ground less “for the painting to come” than “to work against once you're painting.”</p>
+ <h3>Acrylic gesso</h3>
+ <p>Strong, flexible, durable, fast — the modern default. But it's ~45% water that must fully evaporate; that water can re-dissolve animal glue, so a raw canvas mounted with hide glue will de-bond under an acrylic ground. <strong>Indispensable, but never over-applied</strong> — thick coats lower adhesion and crack later; adding more than ~20% chalk/titanium is equally risky. Let a finished ground cure for several days before painting.</p>
+ <h3>Alkyd ground</h3>
+ <p>Closer to a traditional oil ground — good affinity with oil paint, flexible, ideal for large canvas (it tolerates flexing without cracking). Applied straight to panel/cloth it sinks in, so first brush an <strong>acrylic isolation size</strong>. Alkyd dries slower and rewards patience: scrape a coat, let it fully dry, sand, repeat — you can reach a “silk-smooth” surface.</p>
+ <div class="supp"><div class="lbl">Editorial · SID</div>
+ <p><strong>Support-Induced Discolouration (SID):</strong> colored matter inside a natural support can be dissolved by the water in acrylic gesso and float up to stain the ground. The fix is an <em>acrylic isolation size</em> on the raw support first; if you'll finish with an oil ground or oil paint directly, SID isn't a concern.</p></div>
+ <h3>Application</h3>
+ <p>Flat-brush with a wide brush, or draw down flat with a long spreader (Liu prefers the spreader — even a window-squeegee). The goal is a single, uniform absorbency across the surface.</p>`,
+ widget:null
+},
+{
+ id:"underpaint", part:"材料 · Materials", num:"06",
+ zt:"起稿 · 色底", et:"Underpainting & Imprimatura",
+ lede_zh:"用丙烯或醇酸树脂画第一遍稿——目的只有一个：给油画提速，并为薄油层备好一个“差不多”的色底。",
+ lede_en:"Draw the first pass in acrylic or alkyd — for one purpose: to speed the oil painting up, and to give the thin oil films an approximate color bed to sit on.",
+ zh:`<p>六胖子用新材料替换古人的耗时步骤：胶合板代木板、丙烯底胶代胶底、丙烯底料代粉底、醇酸树脂代油底。再加一招——<strong>用丙烯或醇酸颜料画第一遍画稿</strong>。</p>
+ <p>实验证明油彩与丙烯只有<em>物理咬合、无化学亲和</em>。因此丙烯画稿要<strong>非常薄</strong>——薄到干后基本还是丙烯底料的状态：粗糙、透气、有牙口，“咬谁谁痛，吃嘛嘛香”。太厚太光的丙烯层反而挂不住油彩。若用醇酸树脂起稿：只能用<strong>白精油/松节油稀释</strong>（不能用水或酒精），可与普通油彩混用，柔韧、干得快、适合放在油彩之下。</p>
+ <h3>色底 Imprimatura</h3>
+ <p><strong>色底</strong>是涂在白色画底上的一层统一、稀薄的颜色（如土红、暖灰）。它给未来的薄油膜一个色彩基调，让画面更饱满、不至于“漏白”。白色丙烯画底上加一层丙烯色底，操作要领与在画底上开孔透气相同——要留毛细孔以利上层黏附。</p>
+ <div class="supp"><div class="lbl">补充 · 上油前充分待干</div>
+ <p>上油彩前<strong>务必确认丙烯/醇酸画稿彻底干燥</strong>：丙烯的黏合力、硬度与吸收性要完全形成后才牢——薄层可能几天，厚层可能几个月。太亮的丙烯层可轻磨改善附着（戴口罩、磨后彻底吸尘）。</p></div>`,
+ en:`<p>Six-Fatty swaps out the old time-sinks: plywood for solid wood, acrylic size for glue size, acrylic gesso for chalk ground, alkyd for oil ground. Then one more move — <strong>lay the first pass in acrylic or alkyd paint</strong>.</p>
+ <p>Testing shows oil and acrylic bond only <em>mechanically, with no chemical affinity</em>. So an acrylic underpainting must be <strong>very thin</strong> — thin enough that, dry, it behaves like the gesso itself: rough, breathable, toothy, gripping whatever sits on it. Thick, glossy acrylic sheds oil. If underpainting in alkyd, thin it <strong>only with mineral/turpentine</strong> (never water or alcohol); it mixes with ordinary oil paint, stays flexible, dries fast, and belongs under the oil.</p>
+ <h3>Imprimatura (the color bed)</h3>
+ <p>An <strong>imprimatura</strong> is one thin, uniform color over the white ground (earth red, warm gray). It gives the coming thin oil films a tonal foundation and keeps the surface full — no white leaking through. Over white acrylic gesso, add an acrylic imprimatura the same way you'd treat the ground: keep enough capillary tooth for the next layer to grip.</p>
+ <div class="supp"><div class="lbl">Editorial · Cure before oiling</div>
+ <p>Before any oil goes on, <strong>make sure the acrylic/alkyd pass is bone-dry</strong>: acrylic's adhesion, hardness and absorbency only fully form after curing — days for a thin layer, months for a thick one. A too-glossy acrylic layer can be lightly sanded to improve grip (mask up; vacuum the dust off completely).</p></div>`,
+ widget:null
+},
+/* ---------- PART III : TECHNIQUE ---------- */
+{
+ id:"threepile", part:"技法 · Technique", num:"07",
+ zt:"三堆色", et:"Three-Pile Color",
+ lede_zh:"六胖子处理皮肤的核心：先在调色板上调足亮、中、暗三堆色，铺到皮肤上像套色木刻，再按解剖结构晕染成有血有肉的人。",
+ lede_en:"The core of Six-Fatty flesh: mix three generous piles — light, mid, shadow — lay them like a color woodcut, then fuse them along the anatomy into living skin.",
+ zh:`<p>古典油画里，人物最难，而人大半被皮肤包裹。六胖子的皮肤法就一句：<strong>先调三堆色，铺上，再衔接。</strong></p>
+ <p>为什么“堆”？因为今天这块皮肤全靠这些色，画到一半不够、回头再调很难调一样，所以<strong>一次多调、成堆备用</strong>。给初学者的三堆配方：</p>
+ <ul>
+ <li><span class="kw">亮部</span>＝皮肤色 + 白 + 光源色</li>
+ <li><span class="kw">中间</span>＝皮肤色 + 环境色（有时甚至就是环境色本身）——这一堆最冷、最不像肤色，是<em>冥灰色</em>的所在</li>
+ <li><span class="kw">暗部</span>＝皮肤色 + 黑 + 一点红（作者常用黑加土红，或黑加印度红）</li>
+ </ul>
+ <p>三色按亮/中/暗铺到脸上，整个头像先像一张<strong>套色木刻</strong>；再按解剖结构把边界晕开、衔接成有血有肉的人。这么做还有个好处：颜色一开始就在画面上，作画时不必回头照顾调色板，专心画面即可。</p>
+ <h3>不止三堆</h3>
+ <p>朴素的东西可用<strong>两堆</strong>（单纯），华丽的东西可用<strong>四堆</strong>（微妙）；甚至同一人体，一块局部两堆、另一块三堆。堆数是表现的选择，不是教条。</p>
+ <div class="supp"><div class="lbl">补充 · 大画的整体控制</div>
+ <p>画一群明暗不同的人物时，用三堆色理念保证整体：<strong>画亮部人物</strong>——多亮色、少灰、慎用深色；<strong>画暗部人物</strong>——多灰、多深、少亮色；中间人物依次类推。如此埋头画局部也不会“跳”出画面，不必像苏联画法那样跑来跑去退远整体调整。</p></div>`,
+ en:`<p>In classical painting the figure is hardest, and the figure is mostly wrapped in skin. The Six-Fatty flesh method is one line: <strong>mix three piles, lay them in, then join them.</strong></p>
+ <p>Why “piles”? Because this patch of skin depends entirely on these colors; run short halfway and you'll never re-mix an exact match. So <strong>mix a lot at once and keep it in piles.</strong> A beginner's recipe:</p>
+ <ul>
+ <li><span class="kw">Light</span> = skin color + white + light-source hue</li>
+ <li><span class="kw">Mid</span> = skin color + environment color (sometimes just the environment color) — the coolest, least “skin-like” pile: home of the <em>nether gray</em></li>
+ <li><span class="kw">Shadow</span> = skin color + black + a touch of red (Liu often uses black + earth red, or black + Indian red)</li>
+ </ul>
+ <p>Laid light/mid/shadow, the head first reads like a <strong>color woodcut</strong>; then you soften the borders along the anatomy until it becomes living flesh. A bonus: the colors are on the picture from the start, so you never turn back to the palette — you stay on the painting.</p>
+ <h3>Not always three</h3>
+ <p>Plain things can take <strong>two</strong> piles (spare); rich things <strong>four</strong> (subtle). You can even model one passage of a body in two and the next in three. Pile-count is an expressive choice, not a rule.</p>
+ <div class="supp"><div class="lbl">Editorial · Holding a big picture together</div>
+ <p>With many figures at different values, use the three-pile idea to keep unity: <strong>a figure in light</strong> — more light color, little gray, deep color sparingly; <strong>a figure in shadow</strong> — more gray and dark, little light color; mid figures in between. Then you can work head-down on a passage without it “jumping” out of the picture — no Soviet-school pacing back and forth to re-adjust the whole.</p></div>`,
+ widget:"flesh"
+},
+{
+ id:"nethergray", part:"技法 · Technique", num:"08",
+ zt:"冥灰色", et:"Nether Gray (“Corpse Gray”)",
+ lede_zh:"三堆色里中间那块和环境有关的灰，是六胖子最显著的标记。学生初用它，脸色苍白灰冷如死人，遂戏称“死人灰”、雅称“冥灰”。",
+ lede_en:"The environment-linked mid pile is Six-Fatty's most distinctive mark. Students' first faces came out pale and cold as a corpse — hence “corpse gray,” politely “nether gray.”",
+ zh:`<p>三堆色里，亮、暗都好办，唯独<strong>中间那块与环境有关的灰</strong>最棘手：它是皮肤准色里最冷的一块，也是三堆里最不像肤色的一块。最早学画的学生每次画好一张脸——尤其周围环境还没画时——都惊觉肤色<em>苍白、灰冷、死人一般</em>。这灰就是元凶，被戏称“死人灰”，后来雅称<span class="kw">冥灰色</span>。它是六胖子技法的显著特点。</p>
+ <p>马精虎（同门）点破一个关键：<strong>调色板上的灰不是皮肤最终呈现的灰</strong>，而是它与亮部、暗部揉合<em>之前</em>的产物。所以调它时要有<strong>预判</strong>——预想它衔接后的样子。初学者常画不开这块灰，最后仍像木刻、呆板；此时可以<em>粗暴地破坏色块边界</em>，再慢慢收拾形体与色彩变化。</p>
+ <h3>调冥灰的窍门</h3>
+ <p>让冥灰<strong>和环境色有一点色相上的反向变化</strong>：环境色偏蓝绿，就让皮肤的冥灰稍稍偏紫红——在色轮上正好是一对补色关系。这一提前的、主动的色彩安排，会让寥寥几色焕发出<strong>戏剧性</strong>，区别于依赖手感的自然主义描摹。</p>`,
+ en:`<p>Of the three piles, light and shadow are easy; the trouble is <strong>that middle, environment-linked gray</strong> — the coolest note in the skin's true color and the least skin-like of the three. Students' first faces — especially before the surroundings were painted — kept coming out <em>pale, cold, corpse-like</em>. That gray was the culprit, nicknamed “corpse gray,” later dignified as <span class="kw">nether gray</span>. It is the signature of the method.</p>
+ <p>The painter Ma Jinghu named the key: <strong>the gray on the palette is not the gray that ends up on the skin</strong> — it's what exists <em>before</em> it fuses with the light and shadow piles. So mix it with <strong>foresight</strong>, imagining how it will read once joined. Beginners can't “open” the gray and stay woodcut-stiff; the cure is to <em>break the hard borders roughly</em>, then slowly recover the form and color shifts.</p>
+ <h3>The trick to mixing it</h3>
+ <p>Give the nether gray <strong>a slight hue shift against the environment</strong>: if the surroundings lean blue-green, push the flesh gray faintly toward violet-red — a complementary pair on the wheel. That deliberate, pre-planned choice makes a handful of colors turn <strong>dramatic</strong>, unlike the hand-feel copying of naturalism.</p>`,
+ widget:"nether"
+},
+{
+ id:"blend", part:"技法 · Technique", num:"09",
+ zt:"衔接和加色", et:"Blending & Adding Color",
+ lede_zh:"六胖子既能做凡·高的顿挫、赵无极的飞白、弗洛伊德的拖搜，更能用别人不常用的羊毛笔做到光洁平整、甚至没有笔触。",
+ lede_en:"Six-Fatty can do Van Gogh's stumbling stroke, Zao Wou-Ki's broken stroke, Freud's dragging — but above all a smooth, level surface, even strokeless, made with wool brushes others rarely use.",
+ zh:`<h3>工具</h3>
+ <p>松节油、亚麻仁油、油画笔，以及关键的<strong>羊毛板刷、羊毛水粉笔</strong>（中、小号）——羊毛笔能画到几乎没有笔触。自制羊毛笔易掉毛，可用宠物店的小铁梳多刷几遍去浮毛，笔根滴几滴 502 胶固定。另备小尖狼毫（依纹笔/小红毛）、厚软吸油的擦笔纸、一面小镜子。</p>
+ <h3>衔接</h3>
+ <p>相邻两色<strong>薄厚一致、并列到位、相互接壤</strong>后，用松软小水粉笔，笔毛一半压边缘色、一半压皮肤色，<em>气定神闲、沿轮廓前后连贯地一次拗平</em>。这样不会出现凸起的“死色边”。觉得尖锐就再来一两遍，甚至用大白云笔沿边缘轻扫——轮廓便流畅生动。细节画完，可用小白云“轻轻笼统一遍”，压掉过显的笔触。</p>
+ <h3>加色（提红润）</h3>
+ <p><strong>加色前必须先把该处画底做足、形体画充分</strong>，否则色浮在形上、单摆浮搁、不着边际。作者常在脸颊、眼周加大红（也可紫红、桔红）提红润，再润开。切记：<strong>红色的暗部画暗红、亮部画亮红</strong>——不要用同一明度的红左右推移，那样会局部发“粉”。</p>
+ <h3>假定边缘</h3>
+ <p>与背景交接处，先用<strong>假定的背景色</strong>把边缘衔接好，别只多画一点、日后再用背景盖出边缘——那会出现呆板尖锐的死边。假定色不必最终准确，大致相类即可，日后直接画背景就不留死边。</p>`,
+ en:`<h3>Tools</h3>
+ <p>Turpentine, linseed oil, bristle brushes, and crucially <strong>wool flats and wool gouache brushes</strong> (mid + small) — wool can lay paint down almost strokeless. Home-made wool brushes shed; comb them with a small pet-store wire brush to pull loose hairs, then set a few drops of cyanoacrylate at the root. Also keep a fine sable rigger/liner, thick soft oil-absorbent tissue, and a small mirror.</p>
+ <h3>Joining edges</h3>
+ <p>Bring two neighboring colors to <strong>equal thickness, fully placed, edge to edge</strong>; then with a soft small gouache brush — half its hairs on the edge color, half on the skin — <em>calmly draw one continuous pass along the contour</em>. No raised “dead edge” forms. If it still reads sharp, repeat once or twice, or sweep lightly along it with a soft mop. Once details are in, a light overall pass with a soft mop knocks back any strokes that shout.</p>
+ <h3>Adding color (the flush)</h3>
+ <p><strong>Before adding a color, finish the ground beneath it and model the form fully</strong> — otherwise the color floats on the form, unmoored. Liu adds a red (vermilion, or magenta/orange) to cheeks and around the eyes for a flush, then softens it. Remember: <strong>paint the shadow of a red as dark red, the light as light red</strong> — don't slide one value of red around, or it goes chalky in patches.</p>
+ <h3>The assumed edge</h3>
+ <p>Where flesh meets background, join the edge now with an <strong>assumed background color</strong> — don't just overshoot and cover the edge later with the real background, which leaves a stiff, sharp dead edge. The assumed color needn't be exact, only roughly right; then painting the real background later leaves no dead edge.</p>`,
+ widget:null
+},
+{
+ id:"hair", part:"技法 · Technique", num:"10",
+ zt:"须眉头发", et:"Hair, Shadows & Backgrounds",
+ lede_zh:"先画好一层深色的头发“底”（可当作头皮阴影），再用改造过的锯齿刷子把头发“梳”出来——笔毛就是头发丝。",
+ lede_en:"First lay a darker hair “bed” (which doubles as the shadow on the scalp); then comb the hair out with a modified saw-tooth brush — the bristles are the strands.",
+ zh:`<p>头发处理分层：先画好一个<strong>深色的头发底</strong>，它既是发丝底层，也可读作头发留在头皮上的阴影。<em>不要认真画成阴影似的</em>——因为之后要用浅色画出稀稀拉拉、带装饰感的发丝，那时不便直接露出头皮，否则会像“青年老太、怪滑稽的”。</p>
+ <h3>发丝的精加工</h3>
+ <p>作者专门找/改工具画发型：把<strong>板刷按锯齿形状剪开</strong>，蘸满颜色后就成了“梳子”，用它大致画出全头发。这个样子和最终成品有区别——还没趁湿修理，只是干后加工的雏形。理念上，<em>发丝相互间的微妙走向与呼应</em>，远比用块面表现人的面貌更深刻、更微妙、更大气；表现眼角嘴角、眉梢耳唇的走向亦同理。</p>
+ <div class="supp"><div class="lbl">补充 · 背景的作用</div>
+ <p>背景不是填空。它提供皮肤中间调所需的<strong>环境色</strong>（冥灰的来源），并决定边缘的软硬。先用“假定背景色”把人物边缘衔接好，最后再统一背景——顺序反了就会出现死边或色彩失衡。</p></div>`,
+ en:`<p>Hair is layered. First lay a <strong>darker hair bed</strong> — it is both the underlayer of the strands and, read another way, the shadow the hair casts on the scalp. <em>Don't render it as a literal shadow</em>: because you'll later draw sparse, decorative strands in a lighter color, and you won't want bare scalp showing through — that reads like “a young man aged overnight,” faintly absurd.</p>
+ <h3>Fine strand work</h3>
+ <p>Liu finds or modifies tools for a given hairstyle: <strong>cut a flat brush into saw-teeth</strong>, load it, and it becomes a “comb” that lays the whole head of hair in roughly. That stage differs from the finished result — it hasn't been worked wet-into-wet yet, just a dry-worked rough. In principle, the <em>subtle direction of strands and how they answer one another</em> says more, and more grandly, than modeling a face in flat planes — the same goes for the run of eye- and mouth-corners, brow-tips and ear-edges.</p>
+ <div class="supp"><div class="lbl">Editorial · What the background does</div>
+ <p>The background isn't filler. It supplies the <strong>environment color</strong> the mid-tone needs (the source of the nether gray) and it sets edge hardness. Join the figure's edges with an assumed background color first, then unify the real background last — reverse the order and you get dead edges or a color that won't balance.</p></div>`,
+ widget:null
+},
+/* ---------- PART IV : COLOR & GLAZING ---------- */
+{
+ id:"glaze", part:"色彩 · Color & Glazing", num:"11",
+ zt:"罩染", et:"Glazing",
+ lede_zh:"以画为主、以染为辅。最后薄薄一层透明色，统一色调、增加通透——焦赭石淡用如樵色橙色，是六胖子最爱的暖罩染。",
+ lede_en:"Painting leads, glazing follows. One last thin transparent film unifies the key and deepens the glow — thin burnt sienna, warm as ochre-orange, is Six-Fatty's favourite.",
+ zh:`<p><strong>罩染（Glazing）</strong>是在已干画面上薄涂一层<strong>透明或半透明</strong>的颜色，让底下的画面透出来、色调被统一、纯度被调整。这是很多微妙效果“很难用别的方法画出来”的来源，尤其画红裙、植物花草。</p>
+ <p>作者演示：焦赭石（<span class="kw">Burnt Sienna</span>）淡用时类似樵色/橙色，罩上去后灰色区变化不大，而脸颊红晕处会“死黑”一些——所以罩染要<strong>看准局部、协调地施用</strong>，不能无度地全画通罩。一句要诀：<em>写实油画是以画为主、以染为辅</em>；先把画稿画足，再用罩染点睛，切勿指望靠罩染救画。</p>
+ <h3>罩染媒介</h3>
+ <p>需要透明、柔韧、附着好的媒介。传统用含<strong>热聚合亚麻油（stand oil）</strong>或天然树脂的媒介；现代常用<strong>醇酸树脂媒介</strong>（如各家 Alkyd Glazing Medium）。含树脂的媒介在干后不会被后续操作或清洗轻易洗掉，宜作罩染层的结合剂，但<strong>不能用作最后的上光油</strong>。</p>
+ <div class="supp"><div class="lbl">补充 · 一个稳妥的罩染配方</div>
+ <p>透明色 + 醇酸罩染媒介（如 Liquin / Galkyd）少许 + 极少量无味松节油稀释；薄涂、擦匀、软笔抚平。<strong>肥压瘦</strong>下，罩染层含油/树脂多、在下层之上，天然合规。避免用生赭/焦赭之外的强染料一次罩太重——过重会闷死画面。</p></div>`,
+ en:`<p><strong>Glazing</strong> is a thin <strong>transparent or semi-transparent</strong> color laid over a dry passage so the painting below glows through, the key is unified, and saturation is tuned. It's the source of many subtleties “hard to reach any other way,” especially a red dress or plants and flowers.</p>
+ <p>Liu demonstrates with <span class="kw">burnt sienna</span>: thin, it behaves like ochre-orange; glazed over the face, gray areas barely shift while the cheek-flush goes a little “dead dark.” So glaze <strong>locally and in harmony</strong>, never an unbounded coat over everything. The maxim: <em>realist oil painting is led by painting, followed by glazing</em> — model the passage fully first, then glaze to finish; never expect a glaze to rescue a picture.</p>
+ <h3>Glazing medium</h3>
+ <p>You want a transparent, flexible, well-adhering medium. Traditionally one with <strong>heat-bodied linseed (stand oil)</strong> or natural resin; today an <strong>alkyd glazing medium</strong> is common. Resin-bearing media, once dry, won't wash off under later work or cleaning — good as a glaze binder, but <strong>not as the final picture varnish</strong>.</p>
+ <div class="supp"><div class="lbl">Editorial · A dependable glaze recipe</div>
+ <p>Transparent color + a little alkyd glaze medium (Liquin / Galkyd) + a whisper of odorless mineral spirit; brush thin, wipe even, soften with a dry brush. Under <strong>fat-over-lean</strong>, a glaze rich in oil/resin sitting above the layer below is automatically compliant. Avoid a single heavy glaze of any strong stainer — too much smothers the picture.</p></div>`,
+ widget:"glaze"
+},
+{
+ id:"pigments", part:"色彩 · Color & Glazing", num:"12",
+ zt:"油画色", et:"Oil Colors & Pigments",
+ lede_zh:"颜料本身也有肥瘦：吸油量高者慢干、偏肥；吸油量低者快干、偏瘦。懂了吸油量，才能真正把握肥压瘦。",
+ lede_en:"Pigments themselves are fat or lean: high oil-absorption dries slow and fat; low absorption dries fast and lean. Master oil-absorption and you truly master fat-over-lean.",
+ zh:`<p>油画色由<strong>色料（pigment，不溶、遮盖）</strong>与<strong>染料（dye，可溶、透明）</strong>构成。选色的几把标尺：<strong>耐光性</strong>（及其测试标准）、<strong>遮盖力/透明度</strong>、<strong>吸油量</strong>、<strong>着色力</strong>、以及颜料的<strong>标签信息</strong>。</p>
+ <p>其中<strong>吸油量</strong>直接决定肥瘦与干速：书中举例——马尔斯黑（火星黑）吸油量约 15%，明显是瘦色、快干；象牙黑达 80–100%，是肥色、慢干。同用纯颜料时厚层比薄层肥（油多），但“肥”不等于“厚”：往纯颜料里加很多调色油，也变肥。</p>
+ <div class="supp"><div class="lbl">补充 · 常用色吸油量 / 干速速查（近似值）</div>
+ <p>数值为每 100 克色料约需油量的<em>区间</em>，用于判断“肥/瘦”与干速；不同厂牌研磨略有出入，故以区间示意。可点击表头排序。</p></div>`,
+ en:`<p>Oil color is made of <strong>pigment</strong> (insoluble, opaque) and <strong>dye</strong> (soluble, transparent). The measures for choosing a color: <strong>lightfastness</strong> (and its test standards), <strong>opacity/transparency</strong>, <strong>oil-absorption</strong>, <strong>tinting strength</strong>, and the <strong>label</strong> information.</p>
+ <p><strong>Oil-absorption</strong> directly sets fat/lean and drying speed. Liu's examples: Mars black absorbs ~15% oil — clearly lean and fast; ivory black reaches 80–100% — fat and slow. With pure paint a thick layer is fatter than a thin one (more oil), but “fat” ≠ “thick”: add a lot of medium to pure paint and it too becomes fat.</p>
+ <div class="supp"><div class="lbl">Editorial · Oil-absorption & drying quick-reference (approximate)</div>
+ <p>Figures are the approximate <em>range</em> of oil per 100 g of pigment, for judging fat/lean and drying speed; brands vary in milling, so ranges are shown. Click a header to sort.</p></div>`,
+ widget:"pigments"
+},
+{
+ id:"mediums", part:"色彩 · Color & Glazing", num:"13",
+ zt:"媒介剂 · 结合剂", et:"Mediums & Binders",
+ lede_zh:"从各种亚麻油到醇酸树脂，从马洛热媒介到 megilp——媒介决定流动性、干速与肥瘦。可逆的能拆，不可逆的要慎用。",
+ lede_en:"From linseed oils to alkyd resin, from the Maroger medium to megilp — the medium sets flow, drying, and fatness. Reversible binders can be undone; irreversible ones demand care.",
+ zh:`<h3>干性油</h3>
+ <ul>
+ <li><span class="kw">冷压亚麻油</span>（cold-pressed linseed）：色浅质优，用于结合剂、接色与调色油，但<strong>不宜作最后上光</strong>。</li>
+ <li><span class="kw">熟油/日晒油</span>：将亚麻油暴晒增稠、加速氧化。</li>
+ <li><span class="kw">聚合油 / 静置油（stand oil）</span>：加热聚合而成，流平好、黄变少、成膜坚韧——罩染与顺滑接色的良伴。</li>
+ <li>加铅/钴等<strong>有机盐催干剂</strong>可提速，但过量易变色、损久性。</li>
+ </ul>
+ <h3>醇酸树脂媒介（Alkyd）</h3>
+ <p>现代主力：快干、柔韧、透明、与油彩相容，本身即是一种“肥”，随用量增大自然形成柔压刚。只能用<strong>松节油/白精油</strong>稀释。市面成品众多——凝胶型（Liquin Impasto、Galkyd Gel、Da Vinci Alkyd Gel…）与流动型（Liquin Original、Galkyd、Alkyd Glazing Medium…）。</p>
+ <h3>历史名方</h3>
+ <p><strong>Megilp</strong>（乳香松节油 + 熟油的胶冻）曾风靡，但久后易黄裂。<strong>马洛热媒介（Maroger Medium）</strong>：Jacques Maroger 于 1930 年代宣称复原了鲁本斯/伦勃朗等尼德兰大师的“弗拉芒媒介”秘方（含铅熟油 + 乳香胶）。此类古法魅力大、争议也大，用之需知其风险。</p>
+ <div class="supp"><div class="lbl">补充 · 可逆 vs 不可逆</div>
+ <p><strong>可逆结合媒介</strong>（如某些树脂）日后可被溶剂拆解，利于修复；<strong>不可逆</strong>（如醇酸、油自身氧化后）拆不动。含树脂媒介宜作画层结合与罩染，<em>不可</em>当最后上光油——上光油须可逆、可安全去除，以便日后清洁。</p></div>`,
+ en:`<h3>Drying oils</h3>
+ <ul>
+ <li><span class="kw">Cold-pressed linseed</span>: pale and fine; good as binder, for joining color and as painting oil — but <strong>not for final varnish</strong>.</li>
+ <li><span class="kw">Sun-thickened / boiled oil</span>: linseed sunned to thicken and speed oxidation.</li>
+ <li><span class="kw">Stand oil</span>: heat-polymerized — flows level, yellows less, forms a tough film — a friend to glazing and glassy blends.</li>
+ <li><strong>Metallic driers</strong> (lead/cobalt salts) speed drying, but excess yellows and shortens life.</li>
+ </ul>
+ <h3>Alkyd medium</h3>
+ <p>The modern workhorse: fast, flexible, transparent, compatible with oil, and itself a “fat” — increase the dose and it naturally builds flexible-over-rigid. Thin <strong>only with turpentine/mineral spirit</strong>. Many products exist — gels (Liquin Impasto, Galkyd Gel, Da Vinci Alkyd Gel…) and fluids (Liquin Original, Galkyd, Alkyd Glazing Medium…).</p>
+ <h3>Historic recipes</h3>
+ <p><strong>Megilp</strong> (a jelly of mastic-in-turps + boiled oil) was once the rage but yellows and cracks with age. The <strong>Maroger Medium</strong>: in the 1930s Jacques Maroger claimed to have recovered the “Flemish medium” of Rubens and Rembrandt (lead-cooked oil + mastic). Such old recipes are seductive and contested — use them knowing the risk.</p>
+ <div class="supp"><div class="lbl">Editorial · Reversible vs irreversible</div>
+ <p>A <strong>reversible</strong> binder (some resins) can later be un-done by solvent, aiding restoration; an <strong>irreversible</strong> one (alkyd, or oil once oxidized) cannot. Use resin media to bind paint layers and to glaze, but <em>never</em> as the final varnish — a varnish must stay reversible and safely removable for future cleaning.</p></div>`,
+ widget:null
+},
+{
+ id:"varnish", part:"色彩 · Color & Glazing", num:"14",
+ zt:"上光油", et:"Varnishing",
+ lede_zh:"上光油那一刻，六胖子那种透明效果才一下子显现出来。但天气潮湿绝不能上，通风十分重要——重复三遍。",
+ lede_en:"Only when the varnish goes on does the Six-Fatty transparency suddenly appear. But never varnish in damp weather, and ventilate — thrice underlined.",
+ zh:`<p>按六胖子法画成的画，<strong>上光油之前吸油均匀</strong>、便于观察修改；上光那一刻，透明效果才真正“一下子显现出来”。此时切忌因惊喜而分神——要全神贯注盯着光油的反光作业。</p>
+ <h3>操作要点</h3>
+ <ul>
+ <li><strong>先彻底待干。</strong>没上光的六胖子画因大面积油膜吸油而大块变暗，须安详等它干透，方是优质画面之保障。</li>
+ <li><strong>大画一块一块地上</strong>：斜靠墙或画架，从左到右、从上到下，一条接一条，速度要快。不必非横竖交叉——若你的光油干得飞快，交叉重刷只会在黏稠层上徒增笔触、且难均匀。</li>
+ <li>光油进入黏稠状态后<strong>不要回头补刷</strong>。上完平放约十分钟，再面朝墙斜靠。</li>
+ <li><strong>潮湿天气绝不上光</strong>——水分会被堵在色层与光油之间，造成泛白、永远不干。<strong>通风十分重要！</strong></li>
+ <li>出现笔毛杂物，赶紧用小油画笔挑走。</li>
+ </ul>
+ <h3>清洁与结珠</h3>
+ <p>画面清洁：书中提到一种以<strong>唾液（含能同时作用于脂与蛋白的酶）</strong>的传统温和清洁法，以及自制清洁液的比例控制。若上光时出现<strong>结珠子</strong>（光油站不住、成珠）——多因表面太光/太脏或油质问题；退一步用润色光油（Retouching Varnish）打底、改善附着。</p>
+ <div class="supp"><div class="lbl">补充 · 光油种类与安全</div>
+ <p>常见成品光油分<strong>可去除的天然/合成树脂光油</strong>（达玛、MSA 等）与<strong>亚光/半光/亮光</strong>之别。喷涂比刷涂更均匀、更适合怕笔触的薄画面。<strong>安全</strong>：溶剂型光油须在通风处操作、戴口罩，远离火源。</p></div>`,
+ en:`<p>A picture painted the Six-Fatty way <strong>absorbs oil evenly before varnishing</strong>, so it's easy to read and correct; only when the varnish goes on does the transparency truly “appear all at once.” Don't let delight break your focus — watch the varnish's reflection as you work.</p>
+ <h3>Key points</h3>
+ <ul>
+ <li><strong>Let it dry fully first.</strong> An unvarnished Six-Fatty painting sinks and darkens in broad patches as the film absorbs oil; wait calmly for it to cure — that's what guarantees the surface.</li>
+ <li><strong>Varnish a big picture patch by patch:</strong> lean it on wall or easel; left to right, top to bottom, strip after strip, fast. You needn't cross-hatch strokes — if your varnish sets quickly, re-brushing only adds strokes to a tacky layer, unevenly.</li>
+ <li>Once the varnish turns tacky, <strong>don't go back to touch it up.</strong> Lay flat ~10 minutes, then lean it face-to-wall.</li>
+ <li><strong>Never varnish in damp weather</strong> — moisture trapped between paint and varnish blooms white and never dries. <strong>Ventilation matters — a lot.</strong></li>
+ <li>Lift any stray hairs or debris out immediately with a small brush.</li>
+ </ul>
+ <h3>Cleaning & beading</h3>
+ <p>For cleaning, the book notes a gentle traditional method using <strong>saliva</strong> (its enzymes act on both oils and proteins) and careful ratios for a home cleaning solution. If varnish <strong>beads up</strong> (won't sit, forms droplets) — usually too glossy/dirty a surface or an oil problem — step back to a retouching varnish base to improve grip.</p>
+ <div class="supp"><div class="lbl">Editorial · Varnish types & safety</div>
+ <p>Common picture varnishes split into <strong>removable natural/synthetic resin varnishes</strong> (dammar, MSA, etc.) and <strong>matte / satin / gloss</strong> finishes. Spraying lays down more evenly than brushing — better for a thin surface that resists strokes. <strong>Safety:</strong> work solvent varnishes with ventilation and a mask, away from flame.</p></div>`,
+ widget:null
+},
+/* ---------- PART V : HISTORY ---------- */
+{
+ id:"impressionist", part:"美术史 · Art History", num:"15",
+ zt:"印象画派情节", et:"The Impressionist Episode",
+ lede_zh:"印象派是美术史的进步，还是一条岔路？它开拓了图像上的处女地，也痛心地摒弃了许多古典家传的宝物。",
+ lede_en:"Was Impressionism a step forward in art history, or a fork off it? It opened virgin ground in image-making — and, painfully, threw away much of the classical inheritance.",
+ zh:`<p>作者一个逆耳的观察：西方美术史里凡有色彩革命，往往先经历一场<strong>“白色恐怖”</strong>——大量用白把画面提亮，才好往里添色。格列柯、毕加索、马奈都率先用白。而“白色恐怖本身，怎么想都是素描的事”。</p>
+ <p>他进一步指出：真正革命性的现代派人物，很多<strong>并未追随印象派的色彩</strong>，而是直接沿用古典的色彩处理——毕加索、布拉克、克利、波洛克、夏加尔、德国表现主义，作品里几乎找不到印象派的环境色。塞尚的革命也主要在<strong>形体</strong>而非色彩。</p>
+ <p>印象派为文明开拓了一片处女地：在语言逻辑之外，用色彩直接交流。但代价是——<em>放纵色彩笔触时不大尊重形体，甚至歪曲结构、夸张支解固有色</em>；也丢掉了古典多层法所经营的、充分调和与大片衔接带来的典雅。<strong>皮之不存，毛将焉附？</strong>没有形体，那几笔色彩无从着落。</p>`,
+ en:`<p>A deliberately jarring observation: in Western art history, every color revolution tends to be preceded by a <strong>“white terror”</strong> — flooding the picture with white to lighten it before adding color. El Greco, Picasso, Manet all led with white. And “the white terror itself, any way I turn it, is a matter of drawing.”</p>
+ <p>He presses further: many truly revolutionary modernists <strong>did not follow Impressionist color</strong> at all, but kept classical color handling — Picasso, Braque, Klee, Pollock, Chagall, German Expressionism; you can barely find Impressionist environment-color in their work. Even Cézanne's revolution was mainly of <strong>form</strong>, not color.</p>
+ <p>Impressionism opened virgin ground for civilization: communicating directly through color, outside verbal logic. But the price — <em>in indulging color and stroke it disrespected form, even distorting structure and dismembering local color</em> — and it discarded the classical elegance built by full blending and broad fusion across many layers. <strong>If the skin is gone, to what shall the hair cling?</strong> Without form, those few strokes of color have nowhere to land.</p>`,
+ widget:null
+},
+{
+ id:"soviet", part:"美术史 · Art History", num:"16",
+ zt:"苏联画派情节", et:"The Soviet-School Episode",
+ lede_zh:"俄罗斯学了欧洲油画与印象派，中国又追随了苏联。这份追随是一段难堪历史的产物，也沉淀成一个心理情节。",
+ lede_en:"Russia learned European oil and Impressionism; China then followed the USSR. That following was the product of an awkward history — and settled into a psychological complex.",
+ zh:`<p>作者直言：19 世纪后半叶，俄罗斯美术学了欧洲油画与印象派，20 世纪的中国又追随苏联。这份追随<em>“无奈是由于一段难堪的历史事实”</em>，更沉淀出一个心理情节——中国人愿意相信俄罗斯/苏联美术是世界美术史的一座里程碑。</p>
+ <p>就技法而论：印象派观察自然、色彩较自然，其微妙在于<strong>广泛利用原色之间的间色</strong>，早期作品都是细小纷杂的间色小笔触，画出有别于古典“酱油色调”的自然色调。苏联画法承此而来，也带有相近的斑斓与坑洼笔触。</p>
+ <div class="supp"><div class="lbl">补充 · 为什么这段史观重要</div>
+ <p>六胖子把“苏联画法”当作参照的反面：它笔触外露、薄厚不匀，正是六胖子<strong>薄平工整</strong>要避开的效果。理解作者对印象派/苏联画法的批评，就能明白他为何执着于混接、衔接与冥灰色——那是一次对“非古典”训练传统的自觉纠偏。</p></div>`,
+ en:`<p>Bluntly put: in the later 19th century Russian art learned European oil and Impressionism, and in the 20th century China followed the USSR. That following was <em>“helplessly the product of an awkward historical fact”</em> and hardened into a complex — a willingness to believe Russian/Soviet art was a milestone of world art history.</p>
+ <p>On technique: Impressionism observed nature and its color reads natural; its subtlety lies in <strong>exploiting the intermediate colors between primaries</strong> — early works are a fine, busy mosaic of intermediate strokes, a natural key set against the classical “soy-sauce” tonality. The Soviet school descends from this, carrying similar mottling and pitted strokes.</p>
+ <div class="supp"><div class="lbl">Editorial · Why this history matters</div>
+ <p>Six-Fatty treats “Soviet handling” as a reference in negative: exposed strokes, uneven thickness — exactly the effect its <strong>thin, level, tidy</strong> surface avoids. Grasp Liu's critique of Impressionist/Soviet handling and you see why he insists on fusing, joining, and the nether gray — a conscious correction of a “non-classical” training tradition.</p></div>`,
+ widget:null
+},
+{
+ id:"colorepisode", part:"美术史 · Art History", num:"17",
+ zt:"六胖子的彩色情节", et:"Six-Fatty's Color Episode",
+ lede_zh:"从红色说到透明色，从透明色说到油画的纯度对比，再从纯度对比说回六胖子的冥灰色——色彩的最后一环。",
+ lede_en:"From red to transparent color, from transparency to purity-contrast in oil, and back from purity-contrast to the nether gray — the final link in the color chain.",
+ zh:`<p>压轴的色彩论从<strong>红色</strong>说起：红是最有透明潜力的颜色之一（茜素红、焦赭等），由此谈到<strong>透明色</strong>在油画里独有的深度。再由透明色引出<span class="kw">纯度对比（saturation contrast）</span>：油画之美，很大程度来自高纯度的“亮”与低纯度的“灰”之间那个<em>神鬼莫测</em>的对照。</p>
+ <p>而低纯度的一端，正是六胖子的<strong>冥灰色</strong>。它不是脏、不是随便的灰，而是一个<em>被精心安排、与环境成补色微差</em>的低纯度色。有了它作“灰”的锚，画面里那寥寥几笔高纯度的红润、亮部才会跳出戏剧性——纯度对比因冥灰而成立。这就把全书的技法闭环：三堆色→冥灰→衔接→罩染，最终都服务于<strong>纯度与色相的精确对照</strong>。</p>
+ <div class="quote">“寥寥几种颜色，也能焕发出戏剧性的效果。”
+ <cite>— 六胖子画法的信条 · The creed of the method</cite></div>`,
+ en:`<p>The closing color essay begins with <strong>red</strong>: among the most transparent of colors (alizarin, burnt sienna), and from there the special depth transparent color gives oil painting. Transparency then leads to <span class="kw">saturation contrast</span>: much of oil's beauty comes from the <em>uncanny</em> play between a high-purity “bright” and a low-purity “gray.”</p>
+ <p>And the low-purity pole is precisely the <strong>nether gray</strong>. It isn't dirt or a lazy gray but a low-purity color <em>deliberately placed in slight complementary offset to its environment</em>. With it as the anchor of “gray,” the few high-purity notes of flush and light leap out with drama — purity-contrast only works <em>because</em> of the nether gray. This closes the book's loop: three-pile color → nether gray → joining → glazing, all in service of an exact contrast of <strong>purity and hue</strong>.</p>
+ <div class="quote">“Even a mere handful of colors can be made to blaze with drama.”
+ <cite>— The creed of the Six-Fatty method</cite></div>`,
+ widget:null
+},
+{
+ id:"frames", part:"美术史 · Art History", num:"18",
+ zt:"油画外框", et:"Frames & Gilding",
+ lede_zh:"一张画的“最后一层”是它的框。冷镀金、湿镀金、火镀金，从文艺复兴的贴金师到今天的商品框——框也是技法史。",
+ lede_en:"A painting's “last layer” is its frame. Cold-, water-, and fire-gilding; from the Renaissance gilder to today's off-the-shelf moulding — the frame is technique-history too.",
+ zh:`<p>本章由司徒勇从修复与工艺角度写框。<strong>镀金</strong>分三路：冷镀金（现代金粉/金漆，最省事）、<strong>湿镀金（water gilding）</strong>（红/黄底料 + 兔皮胶 + 玛瑙刀压光，最亮）、<strong>火镀金（fire/mercury gilding）</strong>（汞齐镀金，古法，最耐久但有毒）。</p>
+ <p>词源趣谈：英语 <em>Gilder</em>（贴金师）一度比 <em>Framer</em>（制框师）更明确地指向这门手艺；文艺复兴的正经绘画多贴金箔，那些贴金师“不仅费钱，还费工”。书中列举了凡·埃克《阿尔诺芬尼夫妇像》、拉斐尔、伦勃朗《执手套的男子》、安格尔《德·勃罗意》等作的原框尺寸与工艺，以见历代制框风尚。</p>
+ <h3>现代装框结构</h3>
+ <p>作为保存，现代装框讲究一套“三明治”：外框 / 内框 / <strong>槽口绒条</strong>（缓冲）/ 无酸卡纸 / 透明层（可选，隔尘防紫外）/ 盖板（KT 板、瓦楞纸板等）/ 留 3–6 毫米空间透气 / <strong>角垫</strong>缓冲。这套结构让画“悬”在框内、不受挤压与潮气侵害。</p>`,
+ en:`<p>Situ Yong writes frames from the conservator's and craftsman's side. <strong>Gilding</strong> comes three ways: cold-gilding (modern metallic powder/paint, easiest), <strong>water-gilding</strong> (red/yellow bole + rabbit-skin glue + agate burnisher — the brightest), and <strong>fire/mercury gilding</strong> (amalgam gilding — ancient, most durable, toxic).</p>
+ <p>An etymological aside: English <em>Gilder</em> once pointed at this craft more precisely than <em>Framer</em>; serious Renaissance paintings were often gold-leafed, and those gilders “cost not just money but labor.” The book catalogs original frame dimensions and craft for Van Eyck's <em>Arnolfini</em>, Raphael, Rembrandt's <em>Man with a Glove</em>, Ingres's <em>De Broglie</em> and others, to show changing fashions in framing.</p>
+ <h3>Modern framing structure</h3>
+ <p>For preservation, modern framing builds a “sandwich”: outer frame / inner frame / <strong>velvet-lined rabbet</strong> (cushion) / acid-free mat / an optional clear layer (dust and UV) / backing board (foam or corrugated) / a 3–6 mm breathing gap / <strong>corner cushions</strong>. This lets the painting “float” inside — free of pressure and damp.</p>`,
+ widget:null
+},
+{
+ id:"afterword", part:"美术史 · Art History", num:"19",
+ zt:"后记", et:"Afterword",
+ lede_zh:"“六胖子画法”是传统写实油画的现代尝试，是个人摸索出的手段，也是经典技艺的新演绎——请别把它教条化、八股化。",
+ lede_en:"The Six-Fatty method is a modern attempt at traditional realist oil — a personal set of means and a new reading of classical craft. Please don't make it dogma.",
+ zh:`<p>刘溢在原书前言与后记里反复申明：这套方法“充分利用革新了的画材，快速有效地实现凡·埃克、卡拉瓦乔、安格尔等大师的经典画面”；具体办法包括用丙烯底料与醇酸树脂作画底、画稿，运用三堆色和冥灰色等独到的制作理念。</p>
+ <p>但他也谦逊而坚决地叮嘱：<em>“六胖子画法”的成熟还有待同好的演练与磨合，有待赏析、批评与建议——请不要将它教条化、八股化，拜托！</em></p>
+ <div class="supp"><div class="lbl">编者按 · About this knowledge base</div>
+ <p>本知识库依据《六胖子油画技法》（刘溢 著，司徒勇 绘；人民美术出版社，2012 年 7 月；ISBN 978-7-102-06093-4）的<strong>技法与理念</strong>重新组织、翻译并加以补充；所有文字均为再创作，未复制原书正文或图版，书中的绘画、照片、图版版权仍归原作者与出版社所有。若要深入学习，请支持正版原书。</p></div>`,
+ en:`<p>In the book's preface and afterword Liu states his aim again and again: the method “makes full use of renewed painting materials to reach, quickly and soundly, the classical surfaces of Van Eyck, Caravaggio, Ingres”; the means include acrylic gesso and alkyd resin for grounds and underpainting, and the distinctive ideas of three-pile color and the nether gray.</p>
+ <p>But he also, humbly and firmly, warns: <em>the method's maturity still waits on fellow painters' practice and refinement, on appreciation, critique and suggestion — please don't turn it into dogma or formula.</em></p>
+ <div class="supp"><div class="lbl">Editor's note · About this knowledge base</div>
+ <p>This resource reorganizes, translates and expands the <strong>techniques and ideas</strong> of <em>The Six-Fatty Oil Method</em> (by Liu Yi, illustrated by Situ Yong; People's Fine Arts Publishing House, July 2012; ISBN 978-7-102-06093-4). All text here is an original re-creation; no body text or plates from the book are reproduced, and the paintings, photographs and figures remain the copyright of their authors and publisher. To study it in depth, please support the original book.</p></div>`,
+ widget:null
+}
+];
+/* ============================================================ COLOR UTILS */
+function clamp(v,a=0,b=255){return Math.max(a,Math.min(b,v));}
+function hex2rgb(h){h=h.replace('#','');return[parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16)];}
+function rgb2hex(r){return '#'+r.map(x=>clamp(Math.round(x)).toString(16).padStart(2,'0')).join('');}
+function mix(a,b,t){return a.map((x,i)=>x+(b[i]-x)*t);}
+function rgb2hsl(r,g,b){r/=255;g/=255;b/=255;const mx=Math.max(r,g,b),mn=Math.min(r,g,b);let h,s,l=(mx+mn)/2;if(mx==mn){h=s=0;}else{const d=mx-mn;s=l>.5?d/(2-mx-mn):d/(mx+mn);switch(mx){case r:h=(g-b)/d+(g<b?6:0);break;case g:h=(b-r)/d+2;break;default:h=(r-g)/d+4;}h/=6;}return[h*360,s,l];}
+function hsl2rgb(h,s,l){h/=360;let r,g,b;if(s==0){r=g=b=l;}else{const q=l<.5?l*(1+s):l+s-l*s,p=2*l-q;const hue=(t)=>{if(t<0)t+=1;if(t>1)t-=1;if(t<1/6)return p+(q-p)*6*t;if(t<1/2)return q;if(t<2/3)return p+(q-p)*(2/3-t)*6;return p;};r=hue(h+1/3);g=hue(h);b=hue(h-1/3);}return[r*255,g*255,b*255];}
+function lum(rgb){return .2126*rgb[0]+.7152*rgb[1]+.0722*rgb[2];}
+/* ============================================================ STATE / NAV */
+const article=document.getElementById('article');
+const nav=document.getElementById('nav');
+let current=0;
+function buildNav(){
+  let html='',lastPart='';
+  SECTIONS.forEach((s,i)=>{
+    if(s.part!==lastPart){html+=`<div class="part-h">${s.part}</div>`;lastPart=s.part;}
+    html+=`<div class="navitem" data-i="${i}" onclick="go(${i})">
+      <span class="n">${s.num}</span>
+      <span class="t"><span class="zh">${s.zt}</span><span class="en">${s.et}</span></span></div>`;
+  });
+  nav.innerHTML=html;
+}
+function go(i,push=true){
+  current=i;const s=SECTIONS[i];
+  document.querySelectorAll('.navitem').forEach(n=>n.classList.toggle('on',+n.dataset.i===i));
+  const prev=i>0?SECTIONS[i-1]:null, next=i<SECTIONS.length-1?SECTIONS[i+1]:null;
+  article.innerHTML=`
+    <div class="eyebrow">${s.part} · ${s.num}</div>
+    <h1 class="title"><span class="zh-t">${s.zt}</span><span class="en-sub">${s.et}</span></h1>
+    <div class="lede"><span class="l-zh">${s.lede_zh}</span><span class="l-en">${s.lede_en}</span></div>
+    <div class="body-zh"><div class="langtag">中文</div>${s.zh}</div>
+    ${s.widget?`<div id="widget-mount"></div>`:''}
+    <div class="body-en"><div class="langtag">English</div>${s.en}</div>
+    <div class="pager">
+      <a class="${prev?'':'empty'}" ${prev?`onclick="go(${i-1})"`:''}><div class="dir">← 上一节 Prev</div><div class="nm">${prev?prev.zt:''}</div></a>
+      <a class="next ${next?'':'empty'}" ${next?`onclick="go(${i+1})"`:''}><div class="dir">下一节 Next →</div><div class="nm">${next?next.zt:''}</div></a>
+    </div>`;
+  applyLede();
+  if(s.widget){mountWidget(s.widget,document.getElementById('widget-mount'));}
+  if(push)history.replaceState(null,'','#'+s.id);
+  window.scrollTo({top:0,behavior:'instant'in window?'instant':'auto'});
+  if(window.innerWidth<=920)toggleNav(false);
+}
+function applyLede(){
+  // title zh/en handled by CSS body lang classes via .en-sub always shown; hide zh title in EN mode
+}
+/* ============================================================ LANG */
+function setLang(l){
+  document.body.className=document.body.className.replace(/lang-\w+/g,'').trim();
+  document.body.classList.add('lang-'+l);
+  document.querySelectorAll('#langset button').forEach(b=>b.classList.toggle('on',b.dataset.lang===l));
+  // title behavior
+  document.querySelectorAll('.zh-t').forEach(e=>e.style.display=(l==='en')?'none':'block');
+  document.querySelectorAll('.l-zh').forEach(e=>e.style.display=(l==='en')?'none':'inline');
+  document.querySelectorAll('.l-en').forEach(e=>e.style.display=(l==='zh')?'none':(l==='both'?'block':'inline'));
+  if(l==='both'){document.querySelectorAll('.l-en').forEach(e=>{e.style.marginTop='8px';e.style.opacity=.85;e.style.fontSize='16px';});}
+  localStorage&&localStorage.setItem&&safeStore('lymethod_lang',l);
+}
+function safeStore(k,v){try{localStorage.setItem(k,v);}catch(e){}}
+function safeGet(k){try{return localStorage.getItem(k);}catch(e){return null;}}
+document.getElementById('langset').addEventListener('click',e=>{if(e.target.dataset.lang)setLang(e.target.dataset.lang);});
+/* ============================================================ SEARCH */
+document.getElementById('search').addEventListener('input',e=>{
+  const q=e.target.value.trim().toLowerCase();
+  document.querySelectorAll('.navitem').forEach(n=>{
+    const s=SECTIONS[+n.dataset.i];
+    const hay=(s.zt+s.et+s.lede_zh+s.lede_en+s.zh+s.en).toLowerCase();
+    n.classList.toggle('hide',q&&!hay.includes(q));
+  });
+});
+/* ============================================================ MOBILE NAV */
+function toggleNav(force){document.body.classList.toggle('nav-open',force===undefined?!document.body.classList.contains('nav-open'):force);}
+/* ============================================================ WIDGETS */
+function mountWidget(kind,el){({fatlean:wFatLean,flesh:wFlesh,nether:wNether,glaze:wGlaze,pigments:wPigments}[kind])(el);}
+
+/* ---- sphere renderer (shared) ---- */
+function drawSphere(cv,light,mid,shadow,{glaze=null,woodcut=false}={}){
+  const ctx=cv.getContext('2d'),W=cv.width,H=cv.height,cx=W*0.5,cy=H*0.52,R=Math.min(W,H)*0.4;
+  ctx.clearRect(0,0,W,H);
+  // backdrop
+  ctx.fillStyle='#181310';ctx.fillRect(0,0,W,H);
+  if(woodcut){
+    // three flat bands like a color woodcut
+    ctx.save();ctx.beginPath();ctx.arc(cx,cy,R,0,7);ctx.clip();
+    ctx.fillStyle=rgb2hex(shadow);ctx.fillRect(0,0,W,H);
+    ctx.fillStyle=rgb2hex(mid);ctx.beginPath();ctx.arc(cx+R*0.15,cy+R*0.05,R*0.92,0,7);ctx.fill();
+    ctx.fillStyle=rgb2hex(light);ctx.beginPath();ctx.arc(cx-R*0.35,cy-R*0.35,R*0.55,0,7);ctx.fill();
+    ctx.restore();
+  }else{
+    const g=ctx.createRadialGradient(cx-R*0.42,cy-R*0.42,R*0.05,cx,cy,R*1.15);
+    g.addColorStop(0,rgb2hex(light));
+    g.addColorStop(0.42,rgb2hex(mid));
+    g.addColorStop(1,rgb2hex(shadow));
+    ctx.fillStyle=g;ctx.beginPath();ctx.arc(cx,cy,R,0,7);ctx.fill();
+    // reflected light at lower right
+    const rl=ctx.createRadialGradient(cx+R*0.55,cy+R*0.6,0,cx+R*0.55,cy+R*0.6,R*0.7);
+    rl.addColorStop(0,'rgba('+mid.map(x=>Math.round(x)).join(',')+',0.35)');
+    rl.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.save();ctx.beginPath();ctx.arc(cx,cy,R,0,7);ctx.clip();ctx.fillStyle=rl;ctx.fillRect(0,0,W,H);ctx.restore();
+  }
+  if(glaze){ // multiply glaze
+    ctx.save();ctx.beginPath();ctx.arc(cx,cy,R,0,7);ctx.clip();
+    ctx.globalCompositeOperation='multiply';
+    ctx.globalAlpha=glaze.a;ctx.fillStyle=rgb2hex(glaze.rgb);ctx.fillRect(0,0,W,H);
+    ctx.restore();
+  }
+  // cast shadow ellipse
+  ctx.globalAlpha=1;ctx.globalCompositeOperation='source-over';
+  const cs=ctx.createRadialGradient(cx,cy+R*1.05,0,cx,cy+R*1.05,R*0.9);
+  cs.addColorStop(0,'rgba(0,0,0,0.5)');cs.addColorStop(1,'rgba(0,0,0,0)');
+  ctx.fillStyle=cs;ctx.beginPath();ctx.ellipse(cx,cy+R*1.02,R*0.85,R*0.22,0,0,7);ctx.fill();
+}
+
+/* ---- 1. FAT OVER LEAN ---- */
+function wFatLean(el){
+  const layers=[
+    {zh:'画底 Ground',en:'Ground',fat:15},
+    {zh:'起稿 Underpaint',en:'Underpainting',fat:30},
+    {zh:'画层 Paint',en:'Paint layer',fat:55},
+    {zh:'罩染 Glaze',en:'Glaze',fat:80}
+  ];
+  el.innerHTML=`<div class="widget">
+    <div class="whead"><span class="wt">肥压瘦 · Fat-over-Lean Simulator</span><span class="wtag">Interactive</span></div>
+    <div class="whint">拖动每一层的“肥度（含油量）”。规则：<b>每一层都要 ≥ 它下面那层</b>。违反了，上面的脆层会开裂。<br>Drag each layer's fatness (oil content). Rule: <b>every layer ≥ the one below it</b>. Break it and the brittle upper film cracks.</div>
+    <div class="stack" id="fl-stack"></div>
+    <canvas id="fl-cv" class="wcanvas" height="120" style="margin-top:18px"></canvas>
+    <div class="legend"><span><i style="background:var(--nether)"></i>瘦 Lean (fast, brittle)</span><span><i style="background:var(--oxide-bright)"></i>肥 Fat (slow, flexible)</span></div>
+    <div class="verdict" id="fl-verdict"></div>
+  </div>`;
+  const stack=el.querySelector('#fl-stack');
+  function fatColor(f){return mix(hex2rgb('#928da0'),hex2rgb('#dd8551'),f/100);}
+  function render(){
+    stack.innerHTML=layers.map((L,i)=>{
+      const c=rgb2hex(fatColor(L.fat));
+      return `<div class="layer" style="background:linear-gradient(90deg,${c},${c}cc)">
+        <span class="lname">${L.zh}</span>
+        <span class="fatctrl"><input type="range" min="0" max="100" value="${L.fat}" data-i="${i}" style="width:90px"><span class="lval" style="min-width:34px;text-align:right">${L.fat}</span></span>
+      </div>`;
+    }).join('');
+    stack.querySelectorAll('input').forEach(inp=>inp.addEventListener('input',e=>{layers[+e.target.dataset.i].fat=+e.target.value;render();judge();}));
+    judge();
+  }
+  function judge(){
+    let ok=true,badAt=-1;
+    for(let i=1;i<layers.length;i++){if(layers[i].fat<layers[i-1].fat){ok=false;badAt=i;break;}}
+    const cv=el.querySelector('#fl-cv');cv.width=cv.offsetWidth;
+    const ctx=cv.getContext('2d'),W=cv.width,H=cv.height;
+    ctx.clearRect(0,0,W,H);
+    // film cross-section
+    const n=layers.length,h=H/n;
+    for(let i=0;i<n;i++){ctx.fillStyle=rgb2hex(fatColor(layers[i].fat));ctx.fillRect(0,H-(i+1)*h,W,h);}
+    const v=el.querySelector('#fl-verdict');
+    if(ok){
+      v.className='verdict good';
+      v.innerHTML='✓ 结构稳固：肥压瘦成立，色膜柔韧一致，不易开裂。<br>Sound: fat-over-lean holds — a flexible, unified film that resists cracking.';
+    }else{
+      v.className='verdict bad';
+      v.innerHTML=`✕ 违反肥压瘦：第 ${badAt+1} 层（${layers[badAt].zh}）比它下面更瘦 → 表面脆层开裂（鳄鱼纹）。<br>Broken: layer ${badAt+1} is leaner than the one below → the brittle surface cracks (alligator craquelure).`;
+      // draw cracks
+      ctx.strokeStyle='rgba(15,10,6,0.8)';ctx.lineWidth=1.4;
+      for(let k=0;k<26;k++){
+        ctx.beginPath();let x=Math.random()*W,y=Math.random()*H*0.5;ctx.moveTo(x,y);
+        for(let s=0;s<3;s++){x+=(Math.random()-0.5)*60;y+=Math.random()*40;ctx.lineTo(x,y);}
+        ctx.stroke();
+      }
+    }
+  }
+  render();
+  window.addEventListener('resize',judge);
+}
+/* ---- 2. THREE-PILE FLESH LAB (signature) ---- */
+const SKINS=[
+  {zh:'白皙 Fair',rgb:[224,178,150]},
+  {zh:'暖黄 Olive',rgb:[206,158,116]},
+  {zh:'小麦 Tan',rgb:[178,124,88]},
+  {zh:'深褐 Deep',rgb:[128,84,60]}
+];
+function threePiles(skin,envHue,warm){
+  const base=skin.slice();
+  // LIGHT = skin + warm white toward light source
+  const warmWhite=hsl2rgb((warm<0.5?40:32),0.18,0.92); // creamy highlight
+  const light=mix(base,warmWhite,0.42);
+  // SHADOW = skin darkened + red-brown
+  const shadow=mix(mix(base,[46,20,16],0.5),[70,28,26],0.25);
+  // NETHER MID = low-sat gray whispering the environment's complement
+  const bh=rgb2hsl(base[0],base[1],base[2]);
+  const comp=(envHue+180)%360;
+  const mid=hsl2rgb(comp,0.13,Math.max(0.34,bh[2]*0.72));
+  return {light,mid,shadow};
+}
+function wFlesh(el){
+  let skinI=1,envHue=170,warm=0.35,woodcut=false,exposed=false;
+  el.innerHTML=`<div class="widget">
+    <div class="whead"><span class="wt">三堆色实验室 · Three-Pile Flesh Lab</span><span class="wtag">Signature</span></div>
+    <div class="whint">调出<b>亮 / 中(冥灰) / 暗</b>三堆色，铺上，再衔接成血肉。改变<b>环境色</b>看冥灰如何随之偏向其补色。<br>Mix <b>light / mid (nether) / shadow</b>, lay them in, then fuse to flesh. Change the <b>environment</b> and watch the nether gray shift toward its complement.</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:start" class="flesh-grid">
+      <div>
+        <canvas id="fl2-cv" class="wcanvas" width="360" height="300"></canvas>
+        <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
+          <button class="wbtn" id="fl2-blend">显示衔接前(木刻) Woodcut</button>
+          <button class="wbtn" id="fl2-exp">环境未画(死人灰) Corpse</button>
+        </div>
+      </div>
+      <div>
+        <div class="ctrl" style="margin-bottom:16px">
+          <label>底肤色 Base skin</label>
+          <div style="display:flex;gap:6px;flex-wrap:wrap" id="fl2-skins"></div>
+        </div>
+        <div class="ctrl"><label>环境色相 Environment hue <b id="fl2-envv">${envHue}°</b></label><input type="range" id="fl2-env" min="0" max="360" value="${envHue}"></div>
+        <div class="ctrl" style="margin-top:12px"><label>光源冷暖 Light warmth <b id="fl2-warmv">暖</b></label><input type="range" id="fl2-warm" min="0" max="100" value="35"></div>
+        <div style="margin-top:18px" class="swatches" id="fl2-sw"></div>
+        <div class="legend" style="margin-top:10px"><span id="fl2-neth"></span></div>
+      </div>
+    </div>
+  </div>`;
+  const cv=el.querySelector('#fl2-cv');
+  const skinsBox=el.querySelector('#fl2-skins');
+  skinsBox.innerHTML=SKINS.map((s,i)=>`<button class="wbtn ${i==skinI?'on':''}" data-i="${i}" style="padding:6px 10px"><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:${rgb2hex(s.rgb)};vertical-align:middle;margin-right:5px"></span>${s.zh}</button>`).join('');
+  function render(){
+    const p=threePiles(SKINS[skinI].rgb,envHue,warm);
+    let L=p.light,M=p.mid,S=p.shadow;
+    if(exposed){ // pull everything toward the cold nether — skin before environment
+      L=mix(L,M,0.55);S=mix(S,M,0.45);M=mix(M,[150,150,160],0.2);
+    }
+    drawSphere(cv,L,M,S,{woodcut});
+    // swatches
+    el.querySelector('#fl2-sw').innerHTML=[[p.light,'亮 LIGHT'],[p.mid,'中·冥灰 NETHER'],[p.shadow,'暗 SHADOW']].map(([c,t])=>{
+      const dark=lum(c)<120;return `<div class="swatch" style="background:${rgb2hex(c)};color:${dark?'rgba(255,255,255,.75)':'rgba(0,0,0,.6)'}">${t}<br>${rgb2hex(c)}</div>`;
+    }).join('');
+    const comp=(envHue+180)%360;
+    el.querySelector('#fl2-neth').innerHTML=`<i style="background:${rgb2hex(p.mid)}"></i>冥灰≈环境补色 ${Math.round(comp)}°，低纯度 · nether ≈ env complement, desaturated`;
+  }
+  skinsBox.querySelectorAll('button').forEach(b=>b.addEventListener('click',e=>{skinI=+b.dataset.i;skinsBox.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));render();}));
+  el.querySelector('#fl2-env').addEventListener('input',e=>{envHue=+e.target.value;el.querySelector('#fl2-envv').textContent=envHue+'°';render();});
+  el.querySelector('#fl2-warm').addEventListener('input',e=>{warm=+e.target.value/100;el.querySelector('#fl2-warmv').textContent=warm<0.5?'暖 Warm':'冷 Cool';render();});
+  el.querySelector('#fl2-blend').addEventListener('click',e=>{woodcut=!woodcut;e.target.classList.toggle('on',woodcut);e.target.textContent=woodcut?'显示衔接后 Blended':'显示衔接前(木刻) Woodcut';render();});
+  el.querySelector('#fl2-exp').addEventListener('click',e=>{exposed=!exposed;e.target.classList.toggle('on',exposed);render();});
+  render();
+}
+
+/* ---- 3. NETHER GRAY WHEEL ---- */
+function wNether(el){
+  let envHue=190;
+  el.innerHTML=`<div class="widget">
+    <div class="whead"><span class="wt">冥灰色轮 · Nether-Gray Wheel</span><span class="wtag">Interactive</span></div>
+    <div class="whint">选一个<b>环境色相</b>。冥灰色不是随便的灰——它是<b>低纯度、偏向环境补色</b>的一块。环境偏蓝绿，冥灰便微微紫红。<br>Pick an <b>environment hue</b>. The nether gray is no random gray — it's <b>low-purity, pushed toward the environment's complement</b>. Blue-green room → faintly violet-red flesh gray.</div>
+    <div style="display:flex;gap:24px;align-items:center;flex-wrap:wrap">
+      <canvas id="nw-cv" width="220" height="220" style="cursor:crosshair;border-radius:50%"></canvas>
+      <div style="flex:1;min-width:180px">
+        <div class="ctrl"><label>环境色相 Environment <b id="nw-h">${envHue}°</b></label><input type="range" id="nw-slider" min="0" max="360" value="${envHue}"></div>
+        <div class="swatches" style="margin-top:16px" id="nw-sw"></div>
+        <p style="font-size:13px;color:var(--chalk-dim);margin-top:12px;line-height:1.5" id="nw-note"></p>
+      </div>
+    </div>
+  </div>`;
+  const cv=el.querySelector('#nw-cv'),ctx=cv.getContext('2d'),R=100,cx=110,cy=110;
+  function wheel(){
+    ctx.clearRect(0,0,220,220);
+    for(let a=0;a<360;a++){
+      ctx.beginPath();ctx.moveTo(cx,cy);
+      ctx.arc(cx,cy,R,(a-1)*Math.PI/180,(a+1)*Math.PI/180);
+      const c=hsl2rgb(a,0.7,0.5);ctx.fillStyle=rgb2hex(c);ctx.fill();
+    }
+    // desaturated inner
+    const g=ctx.createRadialGradient(cx,cy,0,cx,cy,R);
+    g.addColorStop(0,'#181310');g.addColorStop(0.55,'rgba(24,19,16,0.75)');g.addColorStop(1,'rgba(24,19,16,0)');
+    ctx.fillStyle=g;ctx.beginPath();ctx.arc(cx,cy,R,0,7);ctx.fill();
+    function plot(h,r,col,lab){const rad=(h-90)*Math.PI/180;const x=cx+Math.cos(rad)*r,y=cy+Math.sin(rad)*r;
+      ctx.beginPath();ctx.arc(x,y,7,0,7);ctx.fillStyle=col;ctx.strokeStyle='#ece3d4';ctx.lineWidth=2;ctx.fill();ctx.stroke();
+      ctx.fillStyle='#ece3d4';ctx.font='10px IBM Plex Mono';ctx.fillText(lab,x-8,y-11);}
+    const comp=(envHue+180)%360;
+    // line
+    const r1=(envHue-90)*Math.PI/180,r2=(comp-90)*Math.PI/180;
+    ctx.beginPath();ctx.moveTo(cx+Math.cos(r1)*R*0.9,cy+Math.sin(r1)*R*0.9);ctx.lineTo(cx+Math.cos(r2)*R*0.42,cy+Math.sin(r2)*R*0.42);
+    ctx.strokeStyle='rgba(236,227,212,0.3)';ctx.lineWidth=1;ctx.stroke();
+    plot(envHue,R*0.9,rgb2hex(hsl2rgb(envHue,0.7,0.5)),'环境');
+    plot(comp,R*0.42,rgb2hex(hsl2rgb(comp,0.14,0.5)),'冥灰');
+  }
+  function render(){
+    wheel();
+    const comp=(envHue+180)%360;
+    const env=hsl2rgb(envHue,0.55,0.5), neth=hsl2rgb(comp,0.13,0.5);
+    el.querySelector('#nw-sw').innerHTML=[[env,'环境色 ENV'],[neth,'冥灰 NETHER'],[hsl2rgb(comp,0.6,0.5),'补色(高纯) COMPLEMENT']].map(([c,t])=>{
+      const dark=lum(c)<120;return `<div class="swatch" style="background:${rgb2hex(c)};color:${dark?'rgba(255,255,255,.8)':'rgba(0,0,0,.6)'}">${t}</div>`;}).join('');
+    el.querySelector('#nw-note').innerHTML=`环境 ${envHue}° → 补色 ${Math.round(comp)}°。冥灰取补色方向但<b style="color:var(--nether-2)">大幅降低纯度</b>，只留一丝色相——这正是它“像灰又不是灰”的原因。<br><span style="color:var(--chalk-faint)">Env ${envHue}° → complement ${Math.round(comp)}°. The nether gray borrows that direction but drops the saturation hard, keeping only a whisper of hue.</span>`;
+  }
+  el.querySelector('#nw-slider').addEventListener('input',e=>{envHue=+e.target.value;el.querySelector('#nw-h').textContent=envHue+'°';render();});
+  cv.addEventListener('pointerdown',e=>{const rect=cv.getBoundingClientRect();const dx=e.clientX-rect.left-cx,dy=e.clientY-rect.top-cy;envHue=(Math.atan2(dy,dx)*180/Math.PI+90+360)%360;envHue=Math.round(envHue);el.querySelector('#nw-slider').value=envHue;el.querySelector('#nw-h').textContent=envHue+'°';render();});
+  render();
+}
+
+/* ---- 4. GLAZE SIMULATOR ---- */
+const GLAZES=[
+  {zh:'焦赭石 Burnt Sienna',rgb:[150,78,42]},
+  {zh:'茜素红 Alizarin',rgb:[128,34,52]},
+  {zh:'群青 Ultramarine',rgb:[52,60,128]},
+  {zh:'土黄 Yellow Ochre',rgb:[176,132,58]}
+];
+function wGlaze(el){
+  let gi=0,op=0.4;
+  el.innerHTML=`<div class="widget">
+    <div class="whead"><span class="wt">罩染模拟 · Glaze Simulator</span><span class="wtag">Interactive</span></div>
+    <div class="whint">在画好的一片皮肤上，薄薄罩一层透明色。看它如何<b>统一色调、加深通透</b>——以及罩得太重如何“闷死”画面。<br>Lay a thin transparent film over finished flesh. Watch it <b>unify the key and deepen the glow</b> — and how too heavy a glaze smothers it.</div>
+    <div style="display:flex;gap:22px;flex-wrap:wrap;align-items:center">
+      <div style="text-align:center"><canvas id="gz-base" width="150" height="150" class="wcanvas"></canvas><div style="font-family:var(--mono);font-size:10px;color:var(--chalk-faint);margin-top:6px">无罩染 BASE</div></div>
+      <div style="font-size:28px;color:var(--chalk-faint)">→</div>
+      <div style="text-align:center"><canvas id="gz-cv" width="200" height="200" class="wcanvas"></canvas><div style="font-family:var(--mono);font-size:10px;color:var(--oxide-bright);margin-top:6px">罩染后 GLAZED</div></div>
+      <div style="flex:1;min-width:180px">
+        <div class="ctrl"><label>罩染色 Glaze color</label><div id="gz-cols" style="display:flex;gap:6px;flex-wrap:wrap"></div></div>
+        <div class="ctrl" style="margin-top:14px"><label>厚度 Thickness <b id="gz-opv">40%</b></label><input type="range" id="gz-op" min="0" max="85" value="40"></div>
+        <p style="font-size:13px;color:var(--chalk-dim);margin-top:12px;line-height:1.5" id="gz-note"></p>
+      </div>
+    </div>
+  </div>`;
+  const piles=threePiles(SKINS[1].rgb,175,0.35);
+  drawSphere(el.querySelector('#gz-base'),piles.light,piles.mid,piles.shadow,{});
+  const cv=el.querySelector('#gz-cv');
+  el.querySelector('#gz-cols').innerHTML=GLAZES.map((g,i)=>`<button class="wbtn ${i==gi?'on':''}" data-i="${i}" style="padding:6px 9px;font-size:10px"><span style="display:inline-block;width:10px;height:10px;background:${rgb2hex(g.rgb)};margin-right:4px;vertical-align:middle"></span>${g.zh}</button>`).join('');
+  function render(){
+    drawSphere(cv,piles.light,piles.mid,piles.shadow,{glaze:{rgb:GLAZES[gi].rgb,a:op}});
+    const n=el.querySelector('#gz-note');
+    if(op<0.05)n.innerHTML='几乎无罩染——画面保持原本的三堆色。<br>Barely any glaze — the raw three-pile color stands.';
+    else if(op<0.5)n.innerHTML=`薄罩：色调被<b style="color:var(--oxide-bright)">统一</b>，暗部更透、皮肤更暖，冥灰仍在呼吸。这是六胖子想要的“点睛”。<br>Thin: the key <b>unifies</b>, shadows deepen, flesh warms, the nether gray still breathes. This is the finishing touch.`;
+    else n.innerHTML=`太重：<b style="color:var(--oxide-bright)">纯度压平、画面发闷</b>——正是书中警告的“无度地罩染”。以画为主，以染为辅。<br>Too heavy: purity flattens and the picture <b>chokes</b> — exactly the "unbounded glazing" the book warns against.`;
+  }
+  el.querySelector('#gz-cols').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{gi=+b.dataset.i;el.querySelector('#gz-cols').querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));render();}));
+  el.querySelector('#gz-op').addEventListener('input',e=>{op=+e.target.value/100;el.querySelector('#gz-opv').textContent=e.target.value+'%';render();});
+  render();
+}
+
+/* ---- 5. PIGMENT TABLE ---- */
+const PIGMENTS=[
+ {zh:'铅白 / 银白',en:'Lead (Flake) White',abs:10,band:'lean',dry:'fast',op:'不透明 Opaque',nz:'最柔韧的白，最佳肥压瘦基底（有毒）',ne:'Most flexible white; ideal fat-over-lean base (toxic)'},
+ {zh:'钛白',en:'Titanium White',abs:23,band:'lean',dry:'med',op:'不透明 Opaque',nz:'遮盖力最强，现代主力白',ne:'Strongest opacity; the modern staple white'},
+ {zh:'锌白',en:'Zinc White',abs:16,band:'lean',dry:'slow',op:'半透明 Semi',nz:'成膜脆，切勿厚用',ne:'Brittle film — never use thick'},
+ {zh:'那不勒斯黄',en:'Naples Yellow',abs:25,band:'lean',dry:'fast',op:'不透明 Opaque',nz:'含铅，快干，柔和暖黄',ne:'Lead-bearing, fast, soft warm yellow'},
+ {zh:'火星黑 / 马尔斯黑',en:'Mars Black',abs:15,band:'lean',dry:'fast',op:'不透明 Opaque',nz:'书中例：瘦而快干（≈15%）',ne:'Book example: lean & fast (≈15%)'},
+ {zh:'象牙黑 / 骨黑',en:'Ivory / Bone Black',abs:90,band:'fat',dry:'slow',op:'半透明 Semi',nz:'书中例：肥而极慢（80–100%）',ne:'Book example: fat & very slow (80–100%)'},
+ {zh:'生赭 / 生棕',en:'Raw Umber',abs:55,band:'med',dry:'fast',op:'半透明 Semi',nz:'含锰天然催干，极宜起稿',ne:'Manganese self-drier; excellent for underpainting'},
+ {zh:'焦棕',en:'Burnt Umber',abs:50,band:'med',dry:'fast',op:'半透明 Semi',nz:'温暖快干的暗色',ne:'Warm, fast-drying dark'},
+ {zh:'土黄 / 黄赭',en:'Yellow Ochre',abs:40,band:'med',dry:'med',op:'半不透明 Semi-opaque',nz:'稳定的基础暖色',ne:'Stable warm staple'},
+ {zh:'生赭石',en:'Raw Sienna',abs:55,band:'med',dry:'med',op:'透明 Transparent',nz:'透明暖色，罩染好用',ne:'Transparent warm; good for glazing'},
+ {zh:'焦赭石',en:'Burnt Sienna',abs:60,band:'fat',dry:'med',op:'透明 Transparent',nz:'六胖子最爱的暖罩染色',ne:"Liu's favourite warm glaze"},
+ {zh:'镉黄',en:'Cadmium Yellow',abs:35,band:'lean',dry:'slow',op:'不透明 Opaque',nz:'遮盖鲜黄，慢干',ne:'Opaque bright yellow, slow'},
+ {zh:'镉红',en:'Cadmium Red',abs:45,band:'med',dry:'slow',op:'不透明 Opaque',nz:'遮盖鲜红，慢干',ne:'Opaque bright red, slow'},
+ {zh:'茜素红',en:'Alizarin Crimson',abs:75,band:'fat',dry:'slow',op:'透明 Transparent',nz:'最慢干之一，透明深红',ne:'Among the slowest; transparent deep red'},
+ {zh:'群青',en:'Ultramarine Blue',abs:65,band:'fat',dry:'slow',op:'透明 Transparent',nz:'慢干透明蓝',ne:'Slow, transparent blue'},
+ {zh:'普蓝',en:'Prussian Blue',abs:55,band:'med',dry:'med',op:'透明 Transparent',nz:'极强着色力，中等干速',ne:'Powerful stainer, medium dry'},
+ {zh:'酞菁蓝',en:'Phthalo Blue',abs:50,band:'med',dry:'med',op:'透明 Transparent',nz:'着色力极强，少量即可',ne:'Extreme tinting strength — use sparingly'},
+ {zh:'钴蓝',en:'Cobalt Blue',abs:55,band:'med',dry:'fast',op:'半透明 Semi',nz:'良好催干剂',ne:'A reliable drier'},
+ {zh:'翠绿 / 铬绿',en:'Viridian',abs:70,band:'fat',dry:'slow',op:'透明 Transparent',nz:'慢干透明绿',ne:'Slow, transparent green'}
+];
+function wPigments(el){
+  let sortKey='abs',asc=true;
+  const dryOrder={fast:0,med:1,slow:2};
+  el.innerHTML=`<div class="widget" style="padding:20px">
+    <div class="whead"><span class="wt">吸油量速查 · Oil-Absorption Reference</span><span class="wtag">${PIGMENTS.length} pigments</span></div>
+    <div class="whint">点击表头排序。<b>吸油量高 → 偏肥、慢干</b>；<b>低 → 偏瘦、快干</b>。这决定了它在肥压瘦结构里的位置。<br>Click a header to sort. <b>High absorption → fat, slow</b>; <b>low → lean, fast.</b> That fixes where it sits in the fat-over-lean stack.</div>
+    <div class="tbl-wrap"><table class="data" id="pg-tbl"></table></div>
+  </div>`;
+  function pill(band){const map={lean:['lean','瘦 Lean'],med:['med','中 Med'],fat:['fat','肥 Fat']};return `<span class="pill ${map[band][0]}">${map[band][1]}</span>`;}
+  function dpill(d){const map={fast:['fast','快 Fast'],med:['medd','中 Med'],slow:['slow','慢 Slow']};return `<span class="pill ${map[d][0]}">${map[d][1]}</span>`;}
+  function render(){
+    const rows=[...PIGMENTS].sort((a,b)=>{
+      let x,y;
+      if(sortKey==='abs'){x=a.abs;y=b.abs;}
+      else if(sortKey==='dry'){x=dryOrder[a.dry];y=dryOrder[b.dry];}
+      else{x=a[sortKey];y=b[sortKey];}
+      return (x<y?-1:x>y?1:0)*(asc?1:-1);
+    });
+    const arrow=k=>sortKey===k?(asc?' ▲':' ▼'):'';
+    el.querySelector('#pg-tbl').innerHTML=`
+      <tr>
+        <th style="cursor:pointer" data-k="en">颜料 Pigment${arrow('en')}</th>
+        <th style="cursor:pointer" data-k="abs">吸油量 Oil abs.${arrow('abs')}</th>
+        <th style="cursor:pointer" data-k="band">肥瘦 Fat/Lean${arrow('band')}</th>
+        <th style="cursor:pointer" data-k="dry">干速 Drying${arrow('dry')}</th>
+        <th>遮盖 Opacity</th>
+        <th>备注 Notes</th>
+      </tr>`+rows.map(p=>`<tr>
+        <td><b style="color:var(--chalk)">${p.zh}</b><br><span style="color:var(--chalk-dim);font-size:12px">${p.en}</span></td>
+        <td><span style="font-family:var(--mono)">≈${p.abs}%</span></td>
+        <td>${pill(p.band)}</td>
+        <td>${dpill(p.dry)}</td>
+        <td style="font-size:12px;color:var(--chalk-dim)">${p.op}</td>
+        <td style="font-size:12.5px"><span class="body-zh-cell">${p.nz}</span><span class="body-en-cell" style="color:var(--chalk-dim)">${p.ne}</span></td>
+      </tr>`).join('');
+    el.querySelectorAll('#pg-tbl th[data-k]').forEach(th=>th.addEventListener('click',()=>{const k=th.dataset.k;if(sortKey===k)asc=!asc;else{sortKey=k;asc=true;}render();}));
+    syncCells();
+  }
+  render();
+}
+function syncCells(){
+  const l=document.body.className.match(/lang-(\w+)/);const mode=l?l[1]:'zh';
+  document.querySelectorAll('.body-zh-cell').forEach(e=>e.style.display=(mode==='en')?'none':'block');
+  document.querySelectorAll('.body-en-cell').forEach(e=>e.style.display=(mode==='zh')?'none':'block');
+}
+/* re-sync table cells whenever language changes */
+const _setLang=setLang;
+setLang=function(l){_setLang(l);syncCells();};
+document.getElementById('langset').addEventListener('click',e=>{if(e.target.dataset.lang)syncCells();});
+
+/* ============================================================ INIT */
+buildNav();
+const savedLang=safeGet('lymethod_lang')||'zh';
+setLang(savedLang);
+const hash=location.hash.replace('#','');
+const startI=Math.max(0,SECTIONS.findIndex(s=>s.id===hash));
+go(startI===-1?0:startI,false);
+window.addEventListener('keydown',e=>{
+  if(e.target.tagName==='INPUT')return;
+  if(e.key==='ArrowRight'&&current<SECTIONS.length-1)go(current+1);
+  if(e.key==='ArrowLeft'&&current>0)go(current-1);
+});
+</script>
+</body>
+</html>
